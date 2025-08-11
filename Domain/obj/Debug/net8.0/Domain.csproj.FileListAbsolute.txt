@@ -1,0 +1,11 @@
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\bin\Debug\net8.0\Domain.deps.json
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\bin\Debug\net8.0\Domain.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\bin\Debug\net8.0\Domain.pdb
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\refint\Domain.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\Domain.pdb
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Domain\obj\Debug\net8.0\ref\Domain.dll

@@ -1,0 +1,89 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\tasks\\commands\\deletetaskcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\tasks\\commands\\deletetaskcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\users\\commands\\assigntasktouserscommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\users\\commands\\assigntasktouserscommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\domain\\entities\\user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\user\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Domain\\Entities\\User\\User.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\User\\User.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Domain\\Entities\\User\\User.cs",
+              "RelativeToolTip": "Domain\\Entities\\User\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T12:54:44.509Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DeleteTaskCommand.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Commands\\DeleteTaskCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Tasks\\Commands\\DeleteTaskCommand.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Commands\\DeleteTaskCommand.cs",
+              "RelativeToolTip": "Application\\Features\\Tasks\\Commands\\DeleteTaskCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T13:39:26.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AssignTaskToUsersCommand.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Users\\Commands\\AssignTaskToUsersCommand.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Users\\Commands\\AssignTaskToUsersCommand.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Users\\Commands\\AssignTaskToUsersCommand.cs",
+              "RelativeToolTip": "Application\\Features\\Users\\Commands\\AssignTaskToUsersCommand.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T12:58:24.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TaskController.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TaskController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\TaskController.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TaskController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\TaskController.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAkwDUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T11:35:25.281Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
