@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\taskcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\tasks\\contracts\\requests\\createtaskrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\tasks\\contracts\\requests\\createtaskrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\tasks\\commands\\createtaskcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\tasks\\commands\\createtaskcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\tasks\\specifications\\taskspecifications.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\tasks\\specifications\\taskspecifications.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CreateTaskCommand.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Commands\\CreateTaskCommand.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Tasks\\Commands\\CreateTaskCommand.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Commands\\CreateTaskCommand.cs",
-              "RelativeToolTip": "Application\\Features\\Tasks\\Commands\\CreateTaskCommand.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T12:14:42.017Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CreateTaskRequest.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
-              "RelativeToolTip": "Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T12:14:12.6Z",
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Presentation\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Presentation\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-12T13:59:38.657Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TaskSpecifications.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Specifications\\TaskSpecifications.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Tasks\\Specifications\\TaskSpecifications.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Specifications\\TaskSpecifications.cs",
-              "RelativeToolTip": "Application\\Features\\Tasks\\Specifications\\TaskSpecifications.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T11:55:37.779Z",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Presentation\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Presentation\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-12T13:46:20.698Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TaskController.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TaskController.cs",
-              "RelativeDocumentMoniker": "Presentation\\Controllers\\TaskController.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TaskController.cs",
-              "RelativeToolTip": "Presentation\\Controllers\\TaskController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCEAAABXAAAAAAAAAA==",
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T11:35:25.281Z",
+              "WhenOpened": "2025-08-12T13:45:12.754Z",
               "EditorCaption": ""
             }
           ]

@@ -33,4 +33,6 @@ public class Error
     public static Error BadRequest(string source, string message) =>
       new(ErrorType.BadRequest, "BAD_REQUEST", source, message);
 
+    public static Error Unauthorized() =>
+          new(ErrorType.Unauthorized, "UN_AUTHORIZED", "JwtMiddleware", "You are not authorized to access this resource. Please log in");
 }

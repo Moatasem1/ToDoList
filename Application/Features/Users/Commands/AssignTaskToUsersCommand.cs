@@ -1,6 +1,7 @@
 ﻿using Application.Features.Tasks.Commands;
 using Application.Features.Tasks.Specifications;
 using Application.Features.Users.Contracts.Requests;
+using Application.Features.Users.Specifications;
 using Application.Services.Interfaces;
 using Domain.Common;
 using Domain.Common.Interfaces;
@@ -23,7 +24,7 @@ public class AssignTaskToUsersCommand(IRepository<Domain.Entities.Task.Task> tas
         var canHandel = await CanHandle(request);
         if (canHandel.IsFailure) return canHandel.Error;
 
-        var task = await taskRepo.Get(new TaskWithAssignedToUsersSpecifications(request.TaskId));
+        var task = await taskRepo.Get(new TaskWithAssignedUsersSpecifications(request.TaskId));
         if (task == null) return Error.NotFound(nameof(AssignTaskToUsersCommand), nameof(request.TaskId), request.TaskId.ToString());
         
         var currentUsers = task.UserAssigments.Select(us=>us.UserId).ToList();

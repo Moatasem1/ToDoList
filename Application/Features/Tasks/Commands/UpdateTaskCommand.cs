@@ -10,11 +10,11 @@ namespace Application.Features.Tasks.Commands;
 
 public sealed class UpdateTaskCommand(AssignTaskToUsersCommand assignCommand, IRepository<Domain.Entities.Task.Task> taskRepo) : IUseCase
 {
-    public async Task<Result<bool,Error>> Handle(UpdateTaskRequest request)
+    public async Task<Result<bool,Error>> Handle(UpdateTaskRequest request,Guid userId, Guid taskId)
     {
-        var task = await taskRepo.Get(new TaskSpecifications(request.TaskId));
+        var task = await taskRepo.Get(new TaskSpecifications(taskId));
 
-        if (task == null) return Error.NotFound(nameof(UpdateTaskCommand), nameof(Domain.Entities.Task.Task.Id), request.TaskId.ToString());
+        if (task == null || task.CreatedBy != userId) return Error.NotFound(nameof(UpdateTaskCommand), nameof(Domain.Entities.Task.Task.Id), taskId.ToString());
 
         var updateResult = task.Update(request.Name);
 
@@ -23,7 +23,7 @@ public sealed class UpdateTaskCommand(AssignTaskToUsersCommand assignCommand, IR
         taskRepo.Update(task);
 
        var assignResult =  await assignCommand.Handle(new AssignTaskToUserRequest(task.Id, request.AssignToIds));
-        if (assignResult.IsFailure) return assignResult.Error;
+       if (assignResult.IsFailure) return assignResult.Error;
 
         return true;
     }

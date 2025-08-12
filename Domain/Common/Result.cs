@@ -2,7 +2,7 @@
 
 namespace Domain.Common;
 
-public class Result<T,E> :IResult<T,E>{
+public class Result<T,E> : IResult<T,E>{
     public T Value { get; }
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;

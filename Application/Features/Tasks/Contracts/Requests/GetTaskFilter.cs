@@ -1,3 +1,7 @@
 ﻿namespace Application.Features.Tasks.Contracts.Requests;
 
-public record DeleteTaskRequest(Guid id);
+public enum GetTaskFilter
+{
+    Assigned=1,
+    Created
+}

@@ -9,12 +9,14 @@ public class Task : IAggregateRoot
     public Guid Id { get; private set; }
     public string Name { get; private set; }
 
+    public Guid CreatedBy { get; private set; }
+
     public IReadOnlyCollection<UserTaskAssignment> UserAssigments => _userAssigments.AsReadOnly();
     private readonly List<UserTaskAssignment> _userAssigments = [];
 
     private Task() { }
 
-    public static Result<Task, Error> Create(string name)
+    public static Result<Task, Error> Create(string name, Guid createdBy)
     {
         var nameValidation = ValidateName(name);
         if (nameValidation.IsFailure)
@@ -23,7 +25,8 @@ public class Task : IAggregateRoot
         var task = new Task
         {
             Id = Guid.NewGuid(),
-            Name = name.Trim().ToLowerInvariant()
+            Name = name.Trim().ToLowerInvariant(),
+            CreatedBy= createdBy,
         };
 
         return task;

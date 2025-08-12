@@ -1,4 +1,5 @@
 using Application.Features.Tasks.Commands;
+using Application.Services;
 using Application.Services.Interfaces;
 using Domain.Common;
 using Domain.Common.Interfaces;
@@ -9,6 +10,7 @@ using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Options;
+using Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,9 @@ builder.Services.AddScoped(typeof(IReadOnlyRepository<>),typeof(ReadOnlyResposit
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(SpeceficationGenerator<>));
+builder.Services.AddScoped<CurrentUserService>();
+builder.Services.AddSingleton<IBase64ByteConverter, Base64ByteConverter>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

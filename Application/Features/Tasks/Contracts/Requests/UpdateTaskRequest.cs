@@ -2,7 +2,7 @@
 
 namespace Application.Features.Tasks.Contracts.Requests;
 
-public record UpdateTaskRequest(Guid TaskId, string Name, List<Guid> AssignToIds);
+public record UpdateTaskRequest(string Name, List<Guid> AssignToIds);
 
 public class UpdateTaskRequestValidator: AbstractValidator<CreateTaskRequest> {
 

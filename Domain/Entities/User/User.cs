@@ -12,7 +12,8 @@ public class User : IAggregateRoot
     public byte[]? Image { get; private set; }
 
     private User() { }
-  
+
+    public string FullName => $"{FirstName} {LastName}";
 
     public static Result<User,Error>Create(string firstName,string lastName,string email, byte[]? image)
     {

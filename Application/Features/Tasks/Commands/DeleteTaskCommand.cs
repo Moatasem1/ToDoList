@@ -8,12 +8,12 @@ namespace Application.Features.Tasks.Commands;
 
 public sealed class DeleteTaskCommand(IRepository<Domain.Entities.Task.Task> taskRepo) : IUseCase
 {
-    public async Task<Result<bool,Error>> Handle(DeleteTaskRequest request)
+    public async Task<Result<bool,Error>> Handle(Guid userId,Guid taskId)
     {
 
-        var task = await taskRepo.Get(new TaskWithAssignedToUsersSpecifications(request.id));
+        var task = await taskRepo.Get(new TaskWithAssignedUsersSpecifications(taskId));
 
-        if (task == null) return Error.NotFound(nameof(DeleteTaskCommand), nameof(request.id), request.id.ToString());
+        if (task == null || task.CreatedBy!=userId) return Error.NotFound(nameof(DeleteTaskCommand), nameof(taskId), taskId.ToString());
 
         task.ClearAll();
 

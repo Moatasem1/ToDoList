@@ -28,12 +28,17 @@ namespace Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Tasks");
                 });
@@ -122,6 +127,15 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("UserTaskAssignment");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Task.Task", b =>
+                {
+                    b.HasOne("Domain.Entities.User.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.User.UserTaskAssignment", b =>
                 {
                     b.HasOne("Domain.Entities.Task.TaskStatus", "Status")
@@ -131,13 +145,13 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Task.Task", null)
-                        .WithMany()
+                        .WithMany("UserAssigments")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User.User", null)
-                        .WithMany("TasksAssigments")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -145,9 +159,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User.User", b =>
+            modelBuilder.Entity("Domain.Entities.Task.Task", b =>
                 {
-                    b.Navigation("TasksAssigments");
+                    b.Navigation("UserAssigments");
                 });
 #pragma warning restore 612, 618
         }

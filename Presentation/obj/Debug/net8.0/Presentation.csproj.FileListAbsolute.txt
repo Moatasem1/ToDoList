@@ -212,8 +212,9 @@ C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Scrutor
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Application.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Application.pdb
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\Presentation.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\Presentation.sourcelink.json
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

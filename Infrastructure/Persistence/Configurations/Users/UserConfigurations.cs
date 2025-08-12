@@ -22,8 +22,13 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(245);
 
-        builder.HasMany(u => u.TasksAssigments)
+        builder.HasMany<UserTaskAssignment>()
             .WithOne()
             .HasForeignKey(x => x.UserId);
+
+        builder.HasMany<Domain.Entities.Task.Task>()
+            .WithOne()
+            .HasForeignKey(x=>x.CreatedBy)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
