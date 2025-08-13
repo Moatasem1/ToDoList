@@ -20,3 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.fs-15px{
+  font-size: 15px;
+}
+.fs-14px{
+  font-size: 14px;
+}
+.fs-13px{
+  font-size: 13px;
+}
+.fs-12px{
+  font-size: 12px;
+}
+
+.py-2px{
+  padding-block: 2px;
+}

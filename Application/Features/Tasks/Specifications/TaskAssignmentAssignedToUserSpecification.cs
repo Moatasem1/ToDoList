@@ -6,5 +6,6 @@ public class TaskAssignmentAssignedToUserSpecification : Specification<Domain.En
 {
     public TaskAssignmentAssignedToUserSpecification(Guid userId) { 
             Criteria = t=>t.UserId == userId;
+            AddInclude(s => s.Status);
     }
 }

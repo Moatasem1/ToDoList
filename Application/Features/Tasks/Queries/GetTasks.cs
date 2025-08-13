@@ -16,8 +16,8 @@ public sealed class GetTasks(GetUserTasksQuery getUserTasksQuery,GetTasksCreated
     {
         var result = taskFilter switch
         {
-            GetTaskFilter.Created => await getUserTasksQuery.Handle(userId),
-            GetTaskFilter.Assigned => await getTasksCreatedByUserQuery.Handle(userId),
+            GetTaskFilter.Created => await getTasksCreatedByUserQuery.Handle(userId),
+            GetTaskFilter.Assigned => await getUserTasksQuery.Handle(userId),
             _ => Error.ValueInvalid(nameof(GetTasks), nameof(taskFilter))
         };
 

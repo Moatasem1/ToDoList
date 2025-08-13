@@ -36,6 +36,8 @@ public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo
                       select new TaskAssignmentDto(
                           task.Id,
                           task.Name,
+                          assignment.Status.Id,
+                          assignment.Status.Name,
                           [.. task.UserAssigments.Select(u => GetUser(u.UserId, usersDic))],
                           GetUser(task.CreatedBy, usersDic)
                         )).ToList();

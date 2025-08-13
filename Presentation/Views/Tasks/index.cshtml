@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"]="Your Tasks";
+
+    <style>
+        .user-image{
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .user-image--sm{
+             width: 1.8rem;
+            height: 1.8rem;
+        }
+    </style>
+}
+
+<section id='tasks-index' class="">
+     @* tasks list *@
+    <ul class="list-unstyled row row-cols-3 gy-4 align-items-stretch">
+        <li v-for="(task,index) in tasks" :key='task.id' class="col d-flex flex-column">
+            @* task card *@
+            <div class="shadow-sm border p-3 rounded grow w-100 d-flex flex-column flex-grow-1">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                    <h2 class="fs-5 fw-bold text-capitalize mb-2">{{task.name}}</h2>
+                    <span class="fs-13px bg-success text-white rounded-pill px-2 py-2px">Completed</span>
+                </div>
+                @* assigned by, date and duration info *@
+                <div class="d-flex align-items-center justify-content-between gap-4 mb-4 flex-grow-1">
+                    @* assigned by *@
+                   <div class="d-flex gap-2">
+                        <span>By</span>
+                        <div class="border border-2 user-image--sm rounded-circle overflow-hidden">
+                            <img :src="task.assignedBy.image" :alt='task.assignedBy.name'>
+                        </div>
+                        <span>{{task.assignedBy.name}}</span>
+                   </div>
+                    @* date and duration *@
+                    <div class="d-flex align-items-center gap-2 fs-14px text-secondary">
+                        <span>10/8/2025</span>
+                        <span>-</span>
+                        <span>8 days</span>
+                    </div>
+                </div>
+                @* <p class="">task desc</p> show desc in popup *@
+                @* assigned users list and show details button *@
+               <footer class="border-top pt-3 pb-1 d-flex justify-content-between items-center">
+                    @* assigned users list *@
+                    <ul class="list-unstyled d-flex gap-2 items-center">
+                        <li v-for="(user,index) in task.assignedTo" :key='user.id' class="border border-2 user-image--sm rounded-circle overflow-hidden">
+                            <img :src="user.image" :alt='user.name'>
+                        </li>
+                    </ul>
+                    <button class='btn btn-sm btn-primary'>Show</button>
+               </footer>
+            </div>
+        </li>
+    </ul>
+</section>
+
+@section Scripts {
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    tasks: []
+                };
+            },
+            methods: {
+                fetchTasks() {
+                    axios.get('/Tasks/Get/?taskFilter=1')
+                        .then(resp => {
+                            this.tasks = resp.data.responseData;
+                        })
+                        .catch(error => {
+                            console.error("Error fetching tasks:", error);
+                        });
+                }
+            },
+            mounted() {
+                this.fetchTasks();
+            }
+        }).mount("#tasks-index");
+    </script>
+}

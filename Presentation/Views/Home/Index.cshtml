@@ -2,7 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="app" class="text-center">
+  <h1 class="display-4 mb-4 fw-bold">Welcome to <span class="text-primary">Todo</span>!</h1>
+  <p class="fw-semibold"><em>Your smart, simple, and stylish companion to conquer tasks and crush your goals every day.</em></p>
+  <p>Let’s make productivity fun and effortless</p>
 </div>
+
+@section Scripts{
+    <script>
+         Vue.createApp({
+            data(){
+                return {message:"hello from index page"}
+            }
+         }).mount("#app");
+    </script>
+}

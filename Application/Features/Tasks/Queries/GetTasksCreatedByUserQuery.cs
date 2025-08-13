@@ -30,6 +30,8 @@ public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userRea
                       select new TaskAssignmentDto(
                           task.Id,
                           task.Name,
+                          null,
+                          null,
                           [.. task.UserAssigments.Select(u => GetUser(u.UserId, usersDic))],
                           GetUser(task.CreatedBy, usersDic)
                         )).ToList();

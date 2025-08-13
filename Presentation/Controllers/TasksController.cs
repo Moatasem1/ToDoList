@@ -8,10 +8,13 @@ using Presentation.Services;
 
 namespace Presentation.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand ,DeleteTaskCommand deleteTaskCommand,CurrentUserService currentUserService,GetTasks getTasks,UpdateTaskStatusCommand updateTaskStatusCommand, IUnitOfWork unitOfWork) : ControllerBase
+public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand, DeleteTaskCommand deleteTaskCommand, CurrentUserService currentUserService, GetTasks getTasks, UpdateTaskStatusCommand updateTaskStatusCommand, IUnitOfWork unitOfWork) : ControllerBase
 {
+    public IActionResult Index()
+    {
+        return View();
+    }
+
     /// <summary>
     /// create task and assign users to it
     /// </summary>
@@ -25,7 +28,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
 
         var result = await createTask.Handle(request, currentUserService.UserId.Value);
 
-        if (result.IsSuccess) 
+        if (result.IsSuccess)
             await unitOfWork.SaveChangesAsync();
 
         return HandleResult(result);
@@ -43,7 +46,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
-        var result = await updateTaskCommand.Handle(request,currentUserService.UserId.Value,id);
+        var result = await updateTaskCommand.Handle(request, currentUserService.UserId.Value, id);
 
         if (result.IsSuccess)
             await unitOfWork.SaveChangesAsync();
@@ -57,7 +60,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
-        var result = await deleteTaskCommand.Handle(currentUserService.UserId.Value,id);
+        var result = await deleteTaskCommand.Handle(currentUserService.UserId.Value, id);
 
         if (result.IsSuccess)
             await unitOfWork.SaveChangesAsync();
@@ -68,22 +71,22 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] GetTaskFilter taskFilter)
     {
-        if (currentUserService.UserId == null) 
+        if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
-        var result = await getTasks.Handle(currentUserService.UserId.Value,taskFilter);
+        var result = await getTasks.Handle(currentUserService.UserId.Value, taskFilter);
 
         return HandleResult(result);
     }
 
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateTaskStatus(UpdateTaskStatusRequest request,Guid id)
+    public async Task<IActionResult> UpdateTaskStatus(UpdateTaskStatusRequest request, Guid id)
     {
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
-        var result = await updateTaskStatusCommand.Handle(request,currentUserService.UserId.Value,id);
+        var result = await updateTaskStatusCommand.Handle(request, currentUserService.UserId.Value, id);
 
         if (result.IsSuccess)
             await unitOfWork.SaveChangesAsync();
