@@ -8,6 +8,8 @@ using Presentation.Services;
 
 namespace Presentation.Controllers;
 
+//[ApiController]
+//[Route("api/[controller]")]
 public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand, DeleteTaskCommand deleteTaskCommand, CurrentUserService currentUserService, GetTasks getTasks, UpdateTaskStatusCommand updateTaskStatusCommand, IUnitOfWork unitOfWork) : ControllerBase
 {
     public IActionResult Index()

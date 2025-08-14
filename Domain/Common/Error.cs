@@ -20,7 +20,6 @@ public class Error
 
     public static Error ValueInvalid(string source, string property) =>
         new(ErrorType.Validation, "VALUE_INVALID", source, $"{property} is invalid.");
-
     public static Error ValueInvalidWithMessage(string source, string message) =>
        new(ErrorType.Validation, "VALUE_INVALID", source, message);
 

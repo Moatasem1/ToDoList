@@ -15,7 +15,7 @@ public sealed class CreateTaskCommand(IReadOnlyRepository<User> userReadOnlyRepo
         var canHandel = await CanHandle(request);
         if (canHandel.IsFailure) return canHandel.Error;
 
-        var taskCreationResult = Domain.Entities.Task.Task.Create(request.Name,userId);
+        var taskCreationResult = Domain.Entities.Task.Task.Create(request.Name,request.Description,userId,request.StartDate,request.EndDate);
         if(taskCreationResult.IsFailure) return taskCreationResult.Error;
 
         var task = taskCreationResult.Value;

@@ -9,7 +9,7 @@ using Domain.Entities.User;
 
 namespace Application.Features.Tasks.Queries;
 
-public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userReadOnlyRepo,IReadOnlyRepository<Domain.Entities.Task.Task> taskReadOnlyRepo) : IUseCase
+public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userReadOnlyRepo,IReadOnlyRepository<Domain.Entities.Task.Task> taskReadOnlyRepo, IBase64ByteConverter base64ByteConverter) : IUseCase
 {
     public async Task<Result<List<TaskAssignmentDto>, Error>> Handle(Guid userId)
     {
@@ -30,6 +30,9 @@ public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userRea
                       select new TaskAssignmentDto(
                           task.Id,
                           task.Name,
+                          task.Description,
+                          task.StartAt,
+                          task.EndAt,
                           null,
                           null,
                           [.. task.UserAssigments.Select(u => GetUser(u.UserId, usersDic))],
@@ -39,9 +42,10 @@ public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userRea
         return result;
     }
 
-    public static UserBasicDetailsDto GetUser(Guid userId, Dictionary<Guid,User>users)
+    public UserBasicDetailsDto GetUser(Guid userId, Dictionary<Guid,User>users)
     {
         var user = users[userId];
-        return new UserBasicDetailsDto(user.Id, user.FullName, "");
+        var image = user.Image is not null ? base64ByteConverter.BytesToBase64(user.Image) : null;
+        return new UserBasicDetailsDto(user.Id, user.FullName, image);
     }
 }

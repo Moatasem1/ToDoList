@@ -16,6 +16,15 @@ public class TaskConfigurations : IEntityTypeConfiguration<Domain.Entities.Task.
             .IsRequired()
             .HasMaxLength(150);
 
+        builder.Property(t => t.Description)
+            .HasMaxLength(1500);
+
+        builder.Property(t => t.StartAt)
+            .IsRequired();
+
+        builder.Property(t=>t.EndAt)
+            .IsRequired();
+
         builder.HasMany(t=>t.UserAssigments)
                 .WithOne()
                 .HasForeignKey(x => x.TaskId)

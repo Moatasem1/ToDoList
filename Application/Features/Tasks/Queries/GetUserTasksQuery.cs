@@ -2,6 +2,7 @@
 using Application.Features.Tasks.Specifications;
 using Application.Features.Users.Contracts;
 using Application.Features.Users.Specifications;
+using Application.Services;
 using Application.Services.Interfaces;
 using Domain.Common;
 using Domain.Common.Interfaces;
@@ -9,7 +10,7 @@ using Domain.Entities.User;
 
 namespace Application.Features.Tasks.Queries;
 
-public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo,IReadOnlyRepository<Domain.Entities.Task.Task> taskReadOnlyRepo,IReadOnlyRepository<UserTaskAssignment> assignmentReadOnlyRepo) : IUseCase
+public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo,IReadOnlyRepository<Domain.Entities.Task.Task> taskReadOnlyRepo,IReadOnlyRepository<UserTaskAssignment> assignmentReadOnlyRepo, IBase64ByteConverter base64ByteConverter) : IUseCase
 {
     public async Task<Result<List<TaskAssignmentDto>, Error>> Handle(Guid userId)
     {
@@ -36,6 +37,9 @@ public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo
                       select new TaskAssignmentDto(
                           task.Id,
                           task.Name,
+                          task.Description,
+                          task.StartAt,
+                          task.EndAt,
                           assignment.Status.Id,
                           assignment.Status.Name,
                           [.. task.UserAssigments.Select(u => GetUser(u.UserId, usersDic))],
@@ -45,9 +49,10 @@ public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo
         return result;
     }
 
-    public static UserBasicDetailsDto GetUser(Guid userId, Dictionary<Guid,User>users)
+    public  UserBasicDetailsDto GetUser(Guid userId, Dictionary<Guid,User>users)
     {
         var user = users[userId];
-        return new UserBasicDetailsDto(user.Id, user.FullName, "");
+        var image = user.Image is not null ? base64ByteConverter.BytesToBase64(user.Image) : null;
+        return new UserBasicDetailsDto(user.Id, user.FullName, image);
     }
 }

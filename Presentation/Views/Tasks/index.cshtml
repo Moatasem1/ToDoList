@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Application.Features.Tasks.Contracts.Requests
+@using Domain.Entities.Task
+@{
     ViewData["Title"]="Your Tasks";
 
     <style>
@@ -8,72 +10,173 @@
         }
 
         .user-image--sm{
-             width: 1.8rem;
+            width: 1.8rem;
             height: 1.8rem;
         }
+
+       .assigned-user-item:not(:first-child){
+         transform: translateX(-10px);
+       }
+
+        .task-status--not-started {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        .task-status--in-progress {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .task-status--completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .tasks-filter{
+
+        }
+        
+
     </style>
 }
 
 <section id='tasks-index' class="">
+    <div class="d-flex align-items-center gap-3 mb-3 fs-14px">
+        <span role="button" @@click="updateActiveFilter(filter.id)" v-for="(filter,index) in filters" :key='filter.id' class="border border-2 text-capitalize border-secondary-emphasis px-2 py-2px rounded "
+         :class="{'bg-primary text-white':filter.id==activeFilter}">{{filter.name}}</span>
+    </div>
      @* tasks list *@
     <ul class="list-unstyled row row-cols-3 gy-4 align-items-stretch">
         <li v-for="(task,index) in tasks" :key='task.id' class="col d-flex flex-column">
             @* task card *@
             <div class="shadow-sm border p-3 rounded grow w-100 d-flex flex-column flex-grow-1">
                 <div class="d-flex align-items-center justify-content-between gap-2">
-                    <h2 class="fs-5 fw-bold text-capitalize mb-2">{{task.name}}</h2>
-                    <span class="fs-13px bg-success text-white rounded-pill px-2 py-2px">Completed</span>
+                    <h2 class="fs-5 fw-bold text-capitalize">{{task.name}}</h2>
+                    <span class="fs-13px text-capitalize rounded-pill px-2 py-2px" :class='getStatusClass(task.statusId)'>{{task.statusName}}</span>
                 </div>
                 @* assigned by, date and duration info *@
-                <div class="d-flex align-items-center justify-content-between gap-4 mb-4 flex-grow-1">
+                <div class="d-flex flex-column gap-2 mb-4 flex-grow-1">
+                     @* date and duration *@
+                    <div class="d-flex align-items-center gap-2 fs-14px text-secondary">
+                        <span>{{formateDate(task.startDate)}}</span>
+                        <span>-</span>
+                        <span>{{formateDate(task.endDate)}}</span>
+                        <span>{{DateDifference(task.startDate,task.endDate)}} days</span>
+                    </div>
                     @* assigned by *@
-                   <div class="d-flex gap-2">
+                   <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2">
                         <span>By</span>
                         <div class="border border-2 user-image--sm rounded-circle overflow-hidden">
-                            <img :src="task.assignedBy.image" :alt='task.assignedBy.name'>
+                            <img class="img-fluid" :src="task.assignedBy.image" :alt='task.assignedBy.name'>
                         </div>
                         <span>{{task.assignedBy.name}}</span>
                    </div>
-                    @* date and duration *@
-                    <div class="d-flex align-items-center gap-2 fs-14px text-secondary">
-                        <span>10/8/2025</span>
-                        <span>-</span>
-                        <span>8 days</span>
-                    </div>
                 </div>
                 @* <p class="">task desc</p> show desc in popup *@
                 @* assigned users list and show details button *@
-               <footer class="border-top pt-3 pb-1 d-flex justify-content-between items-center">
+               <footer class="border-top pt-3 d-flex justify-content-between items-center">
                     @* assigned users list *@
-                    <ul class="list-unstyled d-flex gap-2 items-center">
-                        <li v-for="(user,index) in task.assignedTo" :key='user.id' class="border border-2 user-image--sm rounded-circle overflow-hidden">
-                            <img :src="user.image" :alt='user.name'>
+                    <ul class="list-unstyled d-flex align-items-center ">
+                        <li v-for="(user,index) in task.assignedTo" :key='user.id' class="border border-2 user-image rounded-circle overflow-hidden assigned-user-item">
+                            <img class="img-fluid" :src="user.image" :alt='user.name'>
                         </li>
+                        @* <span class="fs-14px">+2</span> *@
                     </ul>
-                    <button class='btn btn-sm btn-primary'>Show</button>
+                    <div class="d-flex align-items-center gap-2">
+                        <button class='btn btn-sm btn-danger' v-if="activeFilter==@((int)GetTaskFilter.Created)">Delete</button>
+                        <button class='btn btn-sm btn-secondary' v-if="activeFilter==@((int)GetTaskFilter.Created)">Edit</button>
+                        <button @@click='showTaskInfoModal(task)' class='btn btn-sm btn-primary'>Show</button>
+                        @* <button class='btn btn-sm btn-primary'>Complete</button> *@
+                    </div>
                </footer>
             </div>
         </li>
     </ul>
+    @* task info modal *@
+    <div class="modal fade" tabindex="-1" id='taskInfoModal' data-bs-backdrop="static" >
+        <div class="modal-dialog modal-dialog-scrollable ">
+            <div class="modal-content "v-if='selectedTask'>
+            <div class="modal-header">
+                <h5 class="modal-title">Task Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2 class="fs-5 text-capitalize fw-semibol mb-3">{{selectedTask.name}}</h2>
+                 <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2 mb-2">
+                        <span>By</span>
+                        <div class="border border-2 user-image--sm rounded-circle overflow-hidden">
+                            <img class="img-fluid" :src="selectedTask.assignedBy.image" :alt='selectedTask.assignedBy.name'>
+                        </div>
+                        <span>{{selectedTask.assignedBy.name}}</span>
+                </div>
+                <p>{{selectedTask.description}}</p>
+                <h3 class="fs-6 fw-semibold">Assigned to:</h3>
+                <ul class="list-unstyled d-flex flex-column mb-0">
+                    <li v-for='(user,index) in selectedTask.assignedTo' :key='user.id'
+                     class="d-flex align-items-center gap-2 border-bottom py-2">
+                        <div class="border border-2 user-image rounded-circle overflow-hidden assigned-user-item">
+                            <img class="img-fluid" :src="user.image" :alt='user.name'>
+                        </div>
+                        <p class="mb-0 text-capitalize">{{user.name}}</p>
+                    </li>
+                    <li v-if='!selectedTask.assignedTo.length'>no user added</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </section>
+
 
 @section Scripts {
     <script>
         Vue.createApp({
             data() {
                 return {
-                    tasks: []
+                    tasks: [],
+                    selectedTask:null,
+                    activeFilter: @((int)GetTaskFilter.Assigned),
+                    filters: [
+                        {name: 'your tasks', id:@((int)GetTaskFilter.Assigned)},
+                        {name: 'created by you', id:@((int)GetTaskFilter.Created)},
+                    ],
+                    statusColorsMap: new Map([
+                        [@(Domain.Entities.Task.TaskStatus.NotStarted.Id),'task-status--not-started'],
+                        [@(Domain.Entities.Task.TaskStatus.InProgress.Id),'task-status--in-progress'],
+                        [@(Domain.Entities.Task.TaskStatus.Completed.Id),'task-status--completed'],
+                    ]),
+                    currentUser: UserService.getUser()
                 };
             },
             methods: {
                 fetchTasks() {
-                    axios.get('/Tasks/Get/?taskFilter=1')
+                    axios.get(`/Tasks/Get/?taskFilter=${this.activeFilter}`)
                         .then(resp => {
                             this.tasks = resp.data.responseData;
                         })
                         .catch(error => {
                             console.error("Error fetching tasks:", error);
                         });
+                },
+                formateDate(date){
+                    return moment(date).format('D MMM, YYYY');
+                },
+                DateDifference(start,end){
+                    return moment(end).diff(moment(start),'days');
+                },
+                getStatusClass(statusId) {
+                    return this.statusColorsMap.get(statusId) || '';
+                },
+                updateActiveFilter(filterId){
+                    this.activeFilter=filterId;
+                    this.fetchTasks();
+                },
+                showTaskInfoModal(task){
+                    this.selectedTask=task;
+                    const modalEl = document.getElementById('taskInfoModal');
+                    const bsModal = new bootstrap.Modal(modalEl);
+                    bsModal.show();
+                     @* $("#taskInfoModal").show(); *@
                 }
             },
             mounted() {

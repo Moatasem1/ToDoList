@@ -16,7 +16,7 @@ public sealed class UpdateTaskCommand(AssignTaskToUsersCommand assignCommand, IR
 
         if (task == null || task.CreatedBy != userId) return Error.NotFound(nameof(UpdateTaskCommand), nameof(Domain.Entities.Task.Task.Id), taskId.ToString());
 
-        var updateResult = task.Update(request.Name);
+        var updateResult = task.Update(request.Name,request.Description,request.StartDate,request.EndDate);
 
         if(updateResult.IsFailure) return updateResult.Error;
 

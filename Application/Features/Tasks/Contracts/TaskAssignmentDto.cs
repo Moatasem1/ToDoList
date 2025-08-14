@@ -11,4 +11,4 @@ namespace Application.Features.Tasks.Contracts;
 /// <param name="StatusName">null in case it return task created by user</param>
 /// <param name="AssignedTo"></param>
 /// <param name="AssignedBy"></param>
-public record TaskAssignmentDto(Guid Id, string Name, int? StatusId, string? StatusName, List<UserBasicDetailsDto> AssignedTo, UserBasicDetailsDto AssignedBy);
+public record TaskAssignmentDto(Guid Id, string Name,string? Description,DateTime StartDate, DateTime EndDate, int? StatusId, string? StatusName, List<UserBasicDetailsDto> AssignedTo, UserBasicDetailsDto AssignedBy);

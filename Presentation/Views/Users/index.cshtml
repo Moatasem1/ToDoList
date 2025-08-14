@@ -1,0 +1,86 @@
+﻿@*
+    
+*@
+
+<section id='users-index'>
+    <table id='kt-users-table' class='table table-bordered table-striped table-hover'>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</section>
+
+@section Scripts {
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                  message:'hi'
+                };
+            },
+            methods: {
+              fetchUsers(){
+                axios.get("/Users/GetAll")
+                     .then(resp=>{
+                        console.log("moatasem");
+                        console.log(resp.data.responseData);
+                     })
+                     .catch(e=>{})
+              }
+            },
+            mounted() {
+                this.fetchUsers();
+                $('#kt-users-table').DataTable({
+                   paging:true,
+                   searching:true,
+                   ordering:true,
+                   info:true,
+                   pageLength:10,
+                   columnDefs:[
+                        {
+                            targets:2,
+                            orderable:false,
+                            render: function(data,type,row,meta){
+                                return `<img width=40 src="${data}" class="img-fluid rounded-pill">`
+                            }
+                        }
+                   ],
+                   serverSide:true,
+                   ajax:{
+                        url:'/Users/GetAll',
+                        dataSrc:'responseData'
+                   },
+                   columns:[
+                        {data:'id'},
+                        {data:'name'},
+                        {data:'image'},
+                        {
+                            data:null,
+                            orderable:false,
+                            render: function(data,type,row){
+                                return `
+                                   <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-sm btn-secondary" data-id="${row.id}">Edit</button>
+                                        <button class="btn btn-sm btn-danger" data-id="${row.id}">Delete</button>
+                                   </div>
+                                `;
+                            }
+                        }
+                   ],
+                   dom:'Bfrtip',
+                   buttons:[
+                    'copy','csv','excel','print'
+                   ]
+                });
+            }
+        }).mount("#users-index");
+    </script>
+}
+

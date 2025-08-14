@@ -217,4 +217,3 @@ C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbu
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\Presentation.sourcelink.json
-C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

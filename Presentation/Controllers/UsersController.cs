@@ -9,10 +9,16 @@ using Presentation.Services;
 
 namespace Presentation.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
+// [ApiController]
+// [Route("api/[controller]")]
 public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUserCommand, UpdateUserCommand updateUserCommand, DeleteUserCommand deleteUserCommand, GetAllUsersQuery getAllUsersQuery , GetUserQuery getUserQuery ) : ControllerBase
 {
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateUserRequest request)
     {
