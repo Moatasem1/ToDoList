@@ -46,6 +46,6 @@ public sealed class GetTasksCreatedByUserQuery(IReadOnlyRepository<User> userRea
     {
         var user = users[userId];
         var image = user.Image is not null ? base64ByteConverter.BytesToBase64(user.Image) : null;
-        return new UserBasicDetailsDto(user.Id, user.FullName, image);
+        return new UserBasicDetailsDto(user.Id, user.FullName,user.Email, image);
     }
 }

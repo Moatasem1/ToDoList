@@ -1,40 +1,8 @@
 [
   {
     "ContainingType": "Presentation.Controllers.TasksController",
-    "Method": "Create",
-    "RelativePath": "api/Tasks",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Application.Features.Tasks.Contracts.Requests.CreateTaskRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Presentation.Controllers.TasksController",
-    "Method": "Get",
-    "RelativePath": "api/Tasks",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "taskFilter",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Presentation.Controllers.TasksController",
     "Method": "Update",
-    "RelativePath": "api/Tasks/{id}",
+    "RelativePath": "{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -45,9 +13,29 @@
         "IsRequired": true
       },
       {
-        "Name": "request",
-        "Type": "Application.Features.Tasks.Contracts.Requests.UpdateTaskRequest",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StartDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "EndDate",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "AssignToIds",
+        "Type": "System.Collections.Generic.List\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -55,7 +43,7 @@
   {
     "ContainingType": "Presentation.Controllers.TasksController",
     "Method": "Delete",
-    "RelativePath": "api/Tasks/{id}",
+    "RelativePath": "{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -71,15 +59,15 @@
   {
     "ContainingType": "Presentation.Controllers.TasksController",
     "Method": "UpdateTaskStatus",
-    "RelativePath": "api/Tasks/{id}",
+    "RelativePath": "{id}",
     "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Application.Features.Tasks.Contracts.Requests.UpdateTaskStatusRequest",
-        "IsRequired": true
+        "Name": "TaskStatus",
+        "Type": "System.Int32",
+        "IsRequired": false
       },
       {
         "Name": "id",
@@ -87,63 +75,41 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Presentation.Controllers.UsersController",
-    "Method": "Create",
-    "RelativePath": "api/Users",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Application.Features.Users.Contracts.Requests.CreateUserRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Presentation.Controllers.UsersController",
-    "Method": "GetAll",
-    "RelativePath": "api/Users",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
     "ContainingType": "Presentation.Controllers.UsersController",
     "Method": "Update",
-    "RelativePath": "api/Users/{id}",
+    "RelativePath": "{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Application.Features.Users.Contracts.Requests.UpdateUserRequest",
-        "IsRequired": true
+        "Name": "FirstName",
+        "Type": "System.String",
+        "IsRequired": false
       },
       {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Presentation.Controllers.UsersController",
-    "Method": "Delete",
-    "RelativePath": "api/Users/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+        "Name": "LastName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsImageUpdate",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
       {
         "Name": "id",
         "Type": "System.Guid",
@@ -155,7 +121,7 @@
   {
     "ContainingType": "Presentation.Controllers.UsersController",
     "Method": "GetById",
-    "RelativePath": "api/Users/{id}",
+    "RelativePath": "{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

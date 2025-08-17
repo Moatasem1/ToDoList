@@ -1,14 +1,21 @@
-﻿@*
-    
-*@
+﻿@{
+    ViewData["Title"]="Users";
+
+    <style>
+        .user-image{
+            width: 2rem;
+            height: 2rem;
+        }
+    </style>
+}
 
 <section id='users-index'>
     <table id='kt-users-table' class='table table-bordered table-striped table-hover'>
         <thead>
-            <tr>
-                <th>id</th>
-                <th>name</th>
+            <tr class="text-capitalize">
                 <th>image</th>
+                <th>name</th>
+                <th>email</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,24 +26,54 @@
 
 @section Scripts {
     <script>
-        Vue.createApp({
+     var UsersIndex= Vue.createApp({
             data() {
                 return {
-                  message:'hi'
+                  users:[]
                 };
             },
             methods: {
-              fetchUsers(){
-                axios.get("/Users/GetAll")
-                     .then(resp=>{
-                        console.log("moatasem");
-                        console.log(resp.data.responseData);
-                     })
-                     .catch(e=>{})
-              }
+                fetchUsers(){
+                    return (data,callback,seetings)=>{
+                        $.ajax({
+                            url:'/Users/GetAll',
+                            type:'POST',
+                            data: data,
+                            success: (response)=>{
+                                this.users = response.responseData.data;
+                                console.log(this.users)
+                                callback(response.responseData)
+                            },
+                            error: ()=>{
+                            }
+                        });
+                    }
+                },
+                delete(id){
+                    const user = this.users.find(u=>u.id==id);
+                    Swal.fire({
+                        title:'Are Your Sure?',
+                        text:"You won't be able to revert this!",
+                        icon:'warning',
+                        showCancelButton:true,
+                        confirmButtonText:'Yest, delete it!',
+                        cancelButtonText:'Cancel'
+                    }).then(result=>{
+                        if(result.isConfirmed)
+                            this.deleteAsync(id);
+                    });
+                },
+                deleteAsync(id){
+                    axios.delete(`/Users/Delete?id=${id}`,)
+                    .then(resp=>{
+                        Swal.fire('Deleted!',"User has beed deleted",'success');
+                    })
+                },
+                navigateToEdit(id){
+                    window.location.href=`/Users/Edit/${id}`;
+                }
             },
             mounted() {
-                this.fetchUsers();
                 $('#kt-users-table').DataTable({
                    paging:true,
                    searching:true,
@@ -44,31 +81,32 @@
                    info:true,
                    pageLength:10,
                    columnDefs:[
-                        {
-                            targets:2,
-                            orderable:false,
-                            render: function(data,type,row,meta){
-                                return `<img width=40 src="${data}" class="img-fluid rounded-pill">`
-                            }
-                        }
                    ],
                    serverSide:true,
-                   ajax:{
-                        url:'/Users/GetAll',
-                        dataSrc:'responseData'
-                   },
+                   processing:true,
+                   ajax: this.fetchUsers(),
+                   order:[[1,'desc']],
                    columns:[
-                        {data:'id'},
-                        {data:'name'},
-                        {data:'image'},
                         {
-                            data:null,
+                            data:'image',
+                            orderable:false,
+                            render: function(data,type,row,meta){
+                                return `<img src="${data}" class="img-fluid rounded-pill user-image border">`
+                            }
+                        },
+                        {data:'name'},
+                        {
+                            data:'email',
+                            orderable:false
+                        },
+                        {
+                            data: null,
                             orderable:false,
                             render: function(data,type,row){
                                 return `
                                    <div class="d-flex align-items-center gap-2">
-                                        <button class="btn btn-sm btn-secondary" data-id="${row.id}">Edit</button>
-                                        <button class="btn btn-sm btn-danger" data-id="${row.id}">Delete</button>
+                                        <button onclick="UsersIndex.navigateToEdit('${data.id}')" class="btn btn-sm btn-secondary">Edit</button>
+                                        <button onclick="UsersIndex.delete('${data.id}')" class="btn btn-sm btn-danger">Delete</button>
                                    </div>
                                 `;
                             }
@@ -76,11 +114,10 @@
                    ],
                    dom:'Bfrtip',
                    buttons:[
-                    'copy','csv','excel','print'
+                    'csv','excel','print'
                    ]
                 });
             }
         }).mount("#users-index");
     </script>
 }
-

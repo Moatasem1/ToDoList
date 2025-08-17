@@ -5,7 +5,7 @@ using System;
 
 namespace Infrastructure.Persistence.Repositories;
 
-public class Repository<T>(AppDbContext context, SpeceficationGenerator<T> generator) : IRepository<T> where T : class,IAggregateRoot
+public class Repository<T>(AppDbContext context) : IRepository<T> where T : class,IAggregateRoot
 {
     protected readonly DbSet<T> _dbSet = context.Set<T>();
     public async Task Add(T entity)
@@ -20,19 +20,19 @@ public class Repository<T>(AppDbContext context, SpeceficationGenerator<T> gener
 
     public Task<int> Count(ISpecification<T> specification)
     {
-        return generator.ApplySpecification(specification).CountAsync();
+        return ApplySpecification(specification).CountAsync();
     }
 
     public async Task<T?> Get(ISpecification<T> specification)
     {
-        var query = generator.ApplySpecification(specification);
+        var query = ApplySpecification(specification);
 
         return await query.FirstOrDefaultAsync();
     }
 
    public async Task<List<T>> GetAll(ISpecification<T> specification)
     {
-        var query = generator.ApplySpecification(specification);
+        var query = ApplySpecification(specification);
 
         return await query.ToListAsync();
     }
@@ -57,5 +57,9 @@ public class Repository<T>(AppDbContext context, SpeceficationGenerator<T> gener
         _dbSet.Update(entity);
     }
 
-   
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    {
+        return SpeceficationGenerator<T>.GetQuery(_dbSet.AsQueryable(), spec);
+    }
+
 }

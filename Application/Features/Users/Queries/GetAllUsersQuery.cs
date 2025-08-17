@@ -1,5 +1,9 @@
 ﻿using Application.Features.Users.Contracts;
+using Application.Features.Users.Specifications;
+using Application.Options;
 using Application.Services.Interfaces;
+using DataTables.AspNet.AspNetCore;
+using DataTables.AspNet.Core;
 using Domain.Common;
 using Domain.Common.Interfaces;
 using Domain.Entities.User;
@@ -8,16 +12,27 @@ namespace Application.Features.Users.Queries;
 
 public class GetAllUsersQuery(IReadOnlyRepository<User> userReadOnlyRepo,IBase64ByteConverter base64ByteConverter) : IUseCase
 {
-    public async Task<Result<List<UserBasicDetailsDto>, Error>> Handle()
+    public async Task<Result<MyDataTableResponse<UserBasicDetailsDto>, Error>> Handle(IDataTablesRequest request)
     {
-        var users = await userReadOnlyRepo.GetAll();
+        var usersCount = await userReadOnlyRepo.Count();
 
-        var result = users.Select(u =>
+        var filteredUsersCount = await userReadOnlyRepo.Count(new UserSpecfications(request));
+
+        var paginatedUsers = await userReadOnlyRepo.GetAll(new UserSpecfications(request, true));
+
+        var data = paginatedUsers.Select(u =>
         {
             var imageBase64 = (u.Image == null ? null : base64ByteConverter.BytesToBase64(u.Image));
-            return new UserBasicDetailsDto(u.Id, u.FullName, imageBase64);
+            return new UserBasicDetailsDto(u.Id, u.FullName, u.Email, imageBase64);
         }).ToList();
 
-        return result;
+        var response =new MyDataTableResponse<UserBasicDetailsDto>(
+            request.Draw,
+            usersCount,
+            filteredUsersCount,
+            data
+            );
+
+        return response;
     }
 }

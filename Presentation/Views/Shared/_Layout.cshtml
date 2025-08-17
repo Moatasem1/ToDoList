@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    @* <script src="https://unpkg.com/@vuelidate/core@2.0.0-alpha.38/dist/index.iife.js"></script>
+    <script src="https://unpkg.com/@vuelidate/validators@2.0.0-alpha.25/dist/index.iife.js"></script> *@
 
     
     <!-- DataTables Buttons JS and dependencies -->
@@ -94,9 +98,9 @@
             },
             methods:{
                 isActive(item){
-                    const itemPath = `/${item.controller}/${item.action}`.toLowerCase();
+                    const itemPath = `/${item.controller}`.toLowerCase();
                     if(this.currentPath =='/' && item.name.toLowerCase()=='home') return true;
-                    return this.currentPath === itemPath;
+                    return this.currentPath?.includes(itemPath);
                 }
             },
          }).mount("#navbar-app");

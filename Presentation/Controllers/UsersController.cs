@@ -1,16 +1,14 @@
-﻿using Application.Features.Tasks.Contracts.Requests;
-using Application.Features.Users.Commands;
+﻿using Application.Features.Users.Commands;
 using Application.Features.Users.Contracts.Requests;
 using Application.Features.Users.Queries;
-using Domain.Common;
+using DataTables.AspNet.Core;
 using Domain.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Services;
 
 namespace Presentation.Controllers;
 
-// [ApiController]
-// [Route("api/[controller]")]
+//[ApiController]
+//[Route("api/[controller]")]
 public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUserCommand, UpdateUserCommand updateUserCommand, DeleteUserCommand deleteUserCommand, GetAllUsersQuery getAllUsersQuery , GetUserQuery getUserQuery ) : ControllerBase
 {
 
@@ -19,8 +17,13 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return View();
     }
 
+    public IActionResult Edit()
+    {
+        return View();
+    }
+
     [HttpPost]
-    public async Task<IActionResult> Create(CreateUserRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
         var result = await createUserCommand.Handle(request);
 
@@ -41,8 +44,8 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return HandleResult(result);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromQuery] Guid id)
     {
         var result = await deleteUserCommand.Handle(id);
 
@@ -52,10 +55,10 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return HandleResult(result);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpPost]
+    public async Task<IActionResult> GetAll([FromForm] IDataTablesRequest request)
     {
-        var result = await getAllUsersQuery.Handle();
+        var result = await getAllUsersQuery.Handle(request);
 
         return HandleResult(result);
     }

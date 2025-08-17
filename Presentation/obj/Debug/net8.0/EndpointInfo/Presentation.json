@@ -5,57 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Tasks": {
-      "post": {
-        "tags": [
-          "Tasks"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTaskRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTaskRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTaskRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Tasks"
-        ],
-        "parameters": [
-          {
-            "name": "taskFilter",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/GetTaskFilter"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Tasks/{id}": {
+    "/{id}": {
       "put": {
         "tags": [
           "Tasks"
@@ -69,27 +19,49 @@
               "type": "string",
               "format": "uuid"
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskRequest"
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "AssignToIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
               }
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -123,6 +95,14 @@
         ],
         "parameters": [
           {
+            "name": "TaskStatus",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
@@ -132,25 +112,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskStatusRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskStatusRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTaskStatusRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -182,16 +143,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -282,40 +233,86 @@
           }
         }
       }
+    },
+    "/api/Users/datatable": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Draw": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Start": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Length": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Search.Value": {
+                    "type": "string"
+                  },
+                  "Search.IsRegex": {
+                    "type": "boolean"
+                  },
+                  "Columns": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/IColumn"
+                    }
+                  },
+                  "AdditionalParameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "nullable": true
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "Draw": {
+                  "style": "form"
+                },
+                "Start": {
+                  "style": "form"
+                },
+                "Length": {
+                  "style": "form"
+                },
+                "Search.Value": {
+                  "style": "form"
+                },
+                "Search.IsRegex": {
+                  "style": "form"
+                },
+                "Columns": {
+                  "style": "form"
+                },
+                "AdditionalParameters": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "CreateTaskRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "assignToIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateUserRequest": {
         "type": "object",
         "properties": {
@@ -338,53 +335,72 @@
         },
         "additionalProperties": false
       },
-      "GetTaskFilter": {
-        "enum": [
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "UpdateTaskRequest": {
+      "IColumn": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
-          "description": {
+          "field": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
+          "isSearchable": {
+            "type": "boolean",
+            "readOnly": true
           },
-          "endDate": {
-            "type": "string",
-            "format": "date-time"
+          "search": {
+            "$ref": "#/components/schemas/ISearch"
           },
-          "assignToIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "nullable": true
+          "isSortable": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "sort": {
+            "$ref": "#/components/schemas/ISort"
           }
         },
         "additionalProperties": false
       },
-      "UpdateTaskStatusRequest": {
+      "ISearch": {
         "type": "object",
         "properties": {
-          "taskStatus": {
-            "type": "integer",
-            "format": "int32"
+          "value": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "isRegex": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false
+      },
+      "ISort": {
+        "type": "object",
+        "properties": {
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "direction": {
+            "$ref": "#/components/schemas/SortDirection"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SortDirection": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "UpdateUserRequest": {
         "type": "object",

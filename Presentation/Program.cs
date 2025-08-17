@@ -1,6 +1,7 @@
 using Application.Features.Tasks.Commands;
 using Application.Services;
 using Application.Services.Interfaces;
+using DataTables.AspNet.AspNetCore;
 using Domain.Common;
 using Domain.Common.Interfaces;
 using FluentValidation;
@@ -14,7 +15,6 @@ using Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -28,9 +28,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskCommand>();
 builder.Services.AddScoped(typeof(IReadOnlyRepository<>),typeof(ReadOnlyRespository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(SpeceficationGenerator<>));
 builder.Services.AddScoped<CurrentUserService>();
 builder.Services.AddSingleton<IBase64ByteConverter, Base64ByteConverter>();
+builder.Services.RegisterDataTables();
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -57,6 +57,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
         return new BadRequestObjectResult(result);
     };
 });
+
 
 var app = builder.Build();
 

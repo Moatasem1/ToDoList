@@ -54,6 +54,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "DataTables-Editor-Server": {
+              "target": "Package",
+              "version": "[2.2.2, )"
+            },
+            "DataTables.AspNet.AspNetCore": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[11.3.1, )"

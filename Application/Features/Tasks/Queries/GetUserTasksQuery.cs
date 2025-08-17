@@ -2,7 +2,6 @@
 using Application.Features.Tasks.Specifications;
 using Application.Features.Users.Contracts;
 using Application.Features.Users.Specifications;
-using Application.Services;
 using Application.Services.Interfaces;
 using Domain.Common;
 using Domain.Common.Interfaces;
@@ -53,6 +52,6 @@ public sealed class GetUserTasksQuery(IReadOnlyRepository<User> userReadOnlyRepo
     {
         var user = users[userId];
         var image = user.Image is not null ? base64ByteConverter.BytesToBase64(user.Image) : null;
-        return new UserBasicDetailsDto(user.Id, user.FullName, image);
+        return new UserBasicDetailsDto(user.Id, user.FullName,user.Email, image);
     }
 }

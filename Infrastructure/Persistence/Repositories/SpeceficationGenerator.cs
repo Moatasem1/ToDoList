@@ -1,22 +1,43 @@
 ﻿using Domain.Common.Interfaces;
-using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Common;
 
-public class SpeceficationGenerator<T>(AppDbContext context) where T : class
+public class SpeceficationGenerator<T>() where T : class
 {
-    private readonly DbSet<T> _dbSet = context.Set<T>();
-
-    public IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
     {
-        IQueryable<T> query = _dbSet;
+        var query = inputQuery;
 
-        if (spec.Criteria != null)
-            query = query.Where(spec.Criteria);
+        if (specification.Criteria != null)
+        {
+            query = query.Where(specification.Criteria);
+        }
 
-        foreach (var include in spec.Includes)
-            query = query.Include(include);
+        query = specification.Includes.Aggregate(query,
+            (current, include) => current.Include(include));
+
+        query = specification.IncludeStrings.Aggregate(query,
+            (current, include) => current.Include(include));
+
+        if (specification.OrderBy != null)
+        {
+            query = query.OrderBy(specification.OrderBy);
+        }
+        else if (specification.OrderByDescending != null)
+        {
+            query = query.OrderByDescending(specification.OrderByDescending);
+        }
+
+        if (specification.GroupBy != null)
+        {
+            query = query.GroupBy(specification.GroupBy).SelectMany(x => x);
+        }
+
+        if (specification.IsPagingEnabled)
+        {
+            query = query.Skip(specification.Skip).Take(specification.Take);
+        }
 
         return query;
     }
