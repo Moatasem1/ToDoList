@@ -72,7 +72,7 @@ public class Task : IAggregateRoot
             return endDateValidation.Error;
 
         Name = name.Trim().ToLowerInvariant();
-        Description = description.ToLowerInvariant().Trim();
+        Description = description?.ToLowerInvariant().Trim();
         StartAt = startDate;
         EndAt = endDate;
         return true;

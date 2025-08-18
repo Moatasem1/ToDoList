@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"]="Edit User";
+    ViewData["Title"]= ViewBag.Id!=null ? "Edit User" : "Add User";
 
     <style>
        
@@ -9,42 +9,48 @@
 <section id='users-edit'>
     <form class=''>
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h1 class="fs-2">Add User</h1>
+            <h1 class="fs-2">{{ isEditMode ? "Edit User" : "Add User" }}</h1>
             <div class="d-flex align-items-center gap-3 justify-content-end">
                 <a href='/Users/Index' class='btn btn-outline-secondary'>Cancel</a>
-                <button type="button" @@click='createUserAsync' class='btn btn-primary'>Save</button>
+                <button :disabled='!(v$ && v$.$anyDirty) || v$.$invalid' type="button" @@click='submitForm' class='btn btn-primary'>Save</button>
             </div>
         </div>
          <div class='d-flex gap-4'>
             <fieldset class="flex-grow-1">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">First Name</label>
-                    <input v-model='userForm.firstName' type="text" class="form-control w-100" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <input @@blur='touchField("firstName")' v-model='userForm.firstName' type="text" class="form-control w-100" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <span v-if='v$ && v$.firstName.$error' id="emailHelp" class="text-danger small">{{v$.firstName.$errors[0].$message}}</span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                    <input v-model='userForm.lastName' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <input  @@blur='touchField("lastName")' v-model='userForm.lastName' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <span v-if='v$ && v$.lastName.$error' id="emailHelp" class="text-danger small">{{v$.lastName.$errors[0].$message}}</span>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input v-model='userForm.email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <input @@blur='touchField("email")' v-model='userForm.email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <span v-if='v$ && v$.email.$error' id="emailHelp" class="text-danger small">{{v$.email.$errors[0].$message}}</span>
                 </div>
             </fieldset>
-            <div class="mb-3 flex-grow-1">
-                <label for="exampleInputEmail1" class="form-label">Image</label>
-                <input @@change='updateImage' type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div class="flex-grow-1 d-flex flex-column">
+                <image-uploader :image-preview='imagePreview' @@imageChange="updateImage"></image-uploader>
             </div>
         </div>
     </form>
+    {{userForm}}
 </section>
 
 @section Scripts {
-    <script>
-     var UsersEdit= Vue.createApp({
+    <script type='module'>
+        import { ImageUploader } from '/js/components/image-uploader.js';
+        const { useVuelidate } = window.Vuelidate;
+        const { required, email, minLength } = window.VuelidateValidators;
+
+        var UsersEdit= Vue.createApp({
+            components:{
+                ImageUploader
+            },
             data() {
                 return {
                   userForm: {
@@ -53,34 +59,82 @@
                     email:'',
                     image:null
                   },
+                  rules: {
+                    firstName: {required},
+                    lastName:{required},
+                    email: {required},
+                    image:{}
+                  },
+                  v$:null,
+                  userId:null,
+                  imagePreview: null,
                   isImageUpdated: false
                 };
             },
+            computed:{
+                isEditMode(){
+                    return this.userId ? true : false;
+                }
+            },
             methods: {
+                touchField(fieldName){
+                    this.v$[fieldName].$touch()
+                },
+                submitForm(){
+                    if(this.isEditMode){
+                        this.updateUserAsync();
+                    }else{
+                        this.createUserAsync();
+                    }
+                },
                 createUserAsync(){
-                    console.log("hi all")
+                    this.v$.$validate();
+                    if(this.v$.$error) return;
                     axios.post('/Users/Create',this.userForm)
                     .then(resp=>{
                         console.log('added successfully');
-                         @* window.location.href=`/Users/Index`; *@
+                        this.navigateToUsersPage();
                     });
                 },
-                updateImage(event){
-                    const file = event.target.files[0];
-                    if(!file) return;
-
-                    const reader = new FileReader()
-
-                     reader.onload = () => {
-                        this.userForm.image = reader.result;
-                        this.isImageUpdated = true;
-                    };
-
-                    reader.readAsDataURL(file)
+                navigateToUsersPage(){
+                    window.location.href=`/Users/Index`; 
+                },
+                fetchUser(id){
+                    axios.get(`/Users/GetById/${id}`)
+                    .then(resp=>{
+                        this.fillFormWithUserInfo(resp.data.responseData);
+                    })
+                    .catch(error=>{
+                        this.navigateToUsersPage();
+                    })
+                },
+                fillFormWithUserInfo(user){
+                    this.userForm.firstName=user.firstName;
+                    this.userForm.lastName=user.lastName;
+                    this.userForm.email=user.email;
+                    this.imagePreview=user.image;
+                },
+                updateUserAsync(){
+                    axios.put(`/Users/Update/${this.userId}`,{
+                        ...this.userForm,
+                        isImageUpdated: this.isImageUpdated
+                    })
+                    .then(resp=>{
+                        this.navigateToUsersPage();
+                    });
+                },
+                updateImage(imageBase64){
+                    this.isImageUpdated=true;
+                    this.userForm.image = imageBase64;
                 }
             },
             mounted() {
-             
+                this.v$ = useVuelidate(this.rules,this.userForm);
+
+                this.userId = '@(ViewBag.Id)';
+                if(this.isEditMode){
+                   this.fetchUser(this.userId);
+                }
             }
         }).mount("#users-edit");
     </script>

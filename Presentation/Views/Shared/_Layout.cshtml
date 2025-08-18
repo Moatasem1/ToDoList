@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Presentation.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />    
 </head>
 <body>
     <header id='navbar-app'>
@@ -53,8 +53,9 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-    @* <script src="https://unpkg.com/@vuelidate/core@2.0.0-alpha.38/dist/index.iife.js"></script>
-    <script src="https://unpkg.com/@vuelidate/validators@2.0.0-alpha.25/dist/index.iife.js"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/vue-demi"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@vuelidate/core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@vuelidate/validators"></script>
 
     
     <!-- DataTables Buttons JS and dependencies -->
@@ -73,6 +74,7 @@
     </script>
 
     <script>
+        
         Vue.createApp({
             data(){
                 return {

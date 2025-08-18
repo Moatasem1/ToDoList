@@ -17,6 +17,12 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return View();
     }
 
+    public IActionResult Edit(Guid? id)
+    {
+        ViewBag.Id = id;
+        return View();
+    }
+
     /// <summary>
     /// create task and assign users to it
     /// </summary>

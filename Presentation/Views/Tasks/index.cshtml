@@ -85,7 +85,7 @@
                     </ul>
                     <div class="d-flex align-items-center gap-2">
                         <button class='btn btn-sm btn-danger' v-if="activeFilter==@((int)GetTaskFilter.Created)">Delete</button>
-                        <button class='btn btn-sm btn-secondary' v-if="activeFilter==@((int)GetTaskFilter.Created)">Edit</button>
+                        <a class='btn btn-sm btn-secondary' v-if="activeFilter==@((int)GetTaskFilter.Created)" :href="`/Tasks/Edit/${task.id}`">Edit</a>
                         <button @@click='showTaskInfoModal(task)' class='btn btn-sm btn-primary'>Show</button>
                         @* <button class='btn btn-sm btn-primary'>Complete</button> *@
                     </div>
@@ -102,7 +102,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h2 class="fs-5 text-capitalize fw-semibol mb-3">{{selectedTask.name}}</h2>
+                <h2 class="fs-5 text-capitalize fw-semibol mb-1">{{selectedTask.name}}</h2>
+                @* date and duration *@
+                <div class="d-flex align-items-center gap-2 fs-14px text-secondary mb-3">
+                    <span>{{formateDate(selectedTask.startDate)}}</span>
+                    <span>-</span>
+                    <span>{{formateDate(selectedTask.endDate)}}</span>
+                    <span>{{DateDifference(selectedTask.startDate,selectedTask.endDate)}} days</span>
+                </div>
                  <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2 mb-2">
                         <span>By</span>
                         <div class="border border-2 user-image--sm rounded-circle overflow-hidden">
@@ -137,8 +144,8 @@
                     selectedTask:null,
                     activeFilter: @((int)GetTaskFilter.Assigned),
                     filters: [
-                        {name: 'your tasks', id:@((int)GetTaskFilter.Assigned)},
-                        {name: 'created by you', id:@((int)GetTaskFilter.Created)},
+                        {name: 'assigned to you', id:@((int)GetTaskFilter.Assigned)},
+                        {name: 'Created by You', id:@((int)GetTaskFilter.Created)},
                     ],
                     statusColorsMap: new Map([
                         [@(Domain.Entities.Task.TaskStatus.NotStarted.Id),'task-status--not-started'],

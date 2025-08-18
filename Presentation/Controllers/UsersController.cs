@@ -17,8 +17,9 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return View();
     }
 
-    public IActionResult Edit()
+    public IActionResult Edit(Guid? id)
     {
+        ViewBag.Id = id;
         return View();
     }
 
@@ -33,8 +34,8 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return HandleResult(result);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(UpdateUserRequest request, Guid id)
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateUserRequest request, Guid id)
     {
         var result = await updateUserCommand.Handle(id,request);
 
@@ -63,7 +64,7 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
         return HandleResult(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet]
     public async Task<IActionResult> GetById(Guid id)
     {
         var result = await getUserQuery.Handle(id);

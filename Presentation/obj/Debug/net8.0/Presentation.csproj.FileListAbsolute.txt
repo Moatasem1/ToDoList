@@ -225,4 +225,3 @@ C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Microso
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Microsoft.Extensions.Globalization.CultureInfoCache.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Microsoft.Extensions.PlatformAbstractions.dll
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Presentation\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

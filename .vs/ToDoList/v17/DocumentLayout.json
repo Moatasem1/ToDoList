@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -26,7 +30,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "index.cshtml",
               "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\index.cshtml",
               "RelativeDocumentMoniker": "Presentation\\Views\\Users\\index.cshtml",
@@ -46,7 +50,7 @@
               "RelativeDocumentMoniker": "Presentation\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Presentation\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAwCEAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwDwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-17T08:11:38.66Z",
               "IsPinned": true,
@@ -54,7 +58,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Presentation\\Views\\Users\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\Edit.cshtml",
+              "RelativeToolTip": "Presentation\\Views\\Users\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-18T08:10:26.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "UserSpecfications.cs",
               "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
               "RelativeDocumentMoniker": "Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
@@ -62,8 +79,7 @@
               "RelativeToolTip": "Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAmwCIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-17T12:21:16.099Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-17T12:21:16.099Z"
             }
           ]
         }

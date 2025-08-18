@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"]= ViewBag.Id!=null ? "Edit Task" : "Add Task";
+
+    <style>
+       .assigned-user-img{
+        width: 2.8rem;
+        height: 2.8rem;
+       }
+    </style>
+}
+
+<section id='tasks-edit'>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h1 class="fs-2">{{ isEditMode ? "Edit Task" : "Add Task" }}</h1>
+        <div class="d-flex align-items-center gap-3 justify-content-end">
+            <a href='/Tasks/Index' class='btn btn-outline-secondary'>Cancel</a>
+            <button :disabled='!(v$ && v$.$anyDirty) || v$.$invalid' type="button" @@click='submitForm' class='btn btn-primary'>Save</button>
+        </div>
+    </div>
+    <form class='row'>
+        @* Task Details *@
+        <fieldset class="flex-grow-1 col">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Name</label>
+                <input @@blur='touchField("name")' v-model='taskForm.name' type="text" class="form-control w-100" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <span v-if='v$ && v$.name.$error' id="emailHelp" class="text-danger small">{{v$.name.$errors[0].$message}}</span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                <input @@blur='touchField("startDate")' v-model='taskForm.startDate' type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <span v-if='v$ && v$.startDate.$error' id="emailHelp" class="text-danger small">{{v$.startDate.$errors[0].$message}}</span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">End Date</label>
+                <input @@blur='touchField("endDate")' v-model='taskForm.endDate' type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <span v-if='v$ && v$.endDate.$error' id="emailHelp" class="text-danger small">{{v$.endDate.$errors[0].$message}}</span>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Description</label>
+                <textarea @@blur='touchField("description")' rows="8" v-model='taskForm.description' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></textarea>
+                <span v-if='v$ && v$.description.$error' id="emailHelp" class="text-danger small">{{v$.description.$errors[0].$message}}</span>
+            </div>
+        </fieldset>
+        @* User Assignment *@
+        <div class="col d-flex flex-column">
+            <label for="user-assignment" class="form-label">Assign Users</label>
+            <div class='border flex-grow-1 p-3'>
+                <input @@input='fetchUsers' v-model='searchQuery' type="text" class="form-control mb-4" placeholder="Search users...">
+                <ul class="list-unstyled row row-cols-5 gy-3">
+                    @* user card *@
+                    <li v-for="user in users" :key="user.id" class="col">
+                        <input type="checkbox" :id="'user-' + user.id" v-model="taskForm.assignedTo" :value="user.id" class="form-check-input d-none">
+                        <label :for="'user-' + user.id" class="d-flex flex-column  gap-2 cursor-pointer ">
+                            <img class="assigned-user-img rounded-pill border mx-auto" :src="user.image" alt="">
+                            <p class="text-center ">{{ user.name }}</p>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+    {{taskForm}}
+</section>
+
+@section Scripts {
+    <script type='module'>
+        const { useVuelidate } = window.Vuelidate;
+        const { required, email, minLength, maxLength } = window.VuelidateValidators;
+
+        var UsersEdit= Vue.createApp({
+            components:{
+            },
+            data() {
+                return {
+                  taskForm: {
+                    name: '',
+                    description: '',
+                    startDate: '',
+                    endDate: '',
+                    assignedTo: [],
+                  },
+                  rules: {
+                    name: {required, minLength: minLength(3), maxLength: maxLength(150)},
+                    description: {minLength: minLength(3), maxLength: maxLength(1500)},
+                    startDate: {required},
+                    endDate: {required},
+                    assignedTo: {},
+                  },
+                  v$:null,
+                  users: [],
+                  searchQuery: '',
+                  taskId:null,
+                };
+            },
+            computed:{
+                isEditMode(){
+                    return this.taskId ? true : false;
+                }
+            },
+            methods: {
+                touchField(fieldName){
+                    this.v$[fieldName].$touch()
+                },
+                submitForm(){
+                    this.v$.$validate();
+                    if(this.v$.$error) return;
+
+                    if(this.isEditMode){
+                        this.updateUserAsync();
+                    }else{
+                        this.createUserAsync();
+                    }
+                },
+                createUserAsync(){
+                    axios.post('/Tasks/Create',this.taskForm)
+                    .then(resp=>{
+                        console.log('added successfully');
+                        this.navigateToTasksPage();
+                    });
+                },
+                navigateToTasksPage(){
+                    window.location.href=`/Tasks/Index`; 
+                },
+                fetchTask(id){
+                    axios.get(`/Tasks/GetById/${id}`)
+                    .then(resp=>{
+                        this.fillFormWithUserInfo(resp.data.responseData);
+                    })
+                    .catch(error=>{
+                        @* this.navigateToTasksPage(); *@
+                    })
+                },
+                fetchUsers(){
+                     const formData = new FormData();
+
+                    formData.append('draw', '1');
+                    formData.append('start', '0');
+                    formData.append('length', '12');
+                    formData.append('search[value]', this.searchQuery);
+
+                    axios.post(`/Users/GetAll`,formData)
+                    .then(resp=>{
+                        this.users=resp.data.responseData.data;
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                    });
+                },
+                fillFormWithUserInfo(user){
+                    this.taskForm.firstName=user.firstName;
+                    this.taskForm.lastName=user.lastName;
+                    this.taskForm.email=user.email;
+                    this.imagePreview=user.image;
+                },
+                updateUserAsync(){
+                    axios.put(`/Tasks/Update/${this.taskId}`,{
+                        ...this.taskForm,
+                    })
+                    .then(resp=>{
+                        this.navigateToTasksPage();
+                    });
+                },
+            },
+            mounted() {
+                this.v$ = useVuelidate(this.rules,this.taskForm);
+                this.fetchUsers();
+
+                this.taskId = '@(ViewBag.Id)';
+                if(this.isEditMode){
+                   this.fetchTask(this.taskId);
+                }
+            }
+        }).mount("#tasks-edit");
+    </script>
+}

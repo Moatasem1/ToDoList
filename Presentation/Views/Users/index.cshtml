@@ -64,7 +64,7 @@
                     });
                 },
                 deleteAsync(id){
-                    axios.delete(`/Users/Delete?id=${id}`,)
+                    axios.delete(`/Users/Delete?id=${id}`)
                     .then(resp=>{
                         Swal.fire('Deleted!',"User has beed deleted",'success');
                     })
@@ -114,7 +114,17 @@
                    ],
                    dom:'Bfrtip',
                    buttons:[
-                    'csv','excel','print'
+                    'csv','print',
+                   {
+                     text:'Add',
+                     className:'btn btn-primary',
+                     action:function(){
+                       window.location.href='/Users/Edit';
+                     },
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    }
+                   },
                    ]
                 });
             }
