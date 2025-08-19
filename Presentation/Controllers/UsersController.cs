@@ -1,4 +1,6 @@
-﻿using Application.Features.Users.Commands;
+﻿using Application.Features.Tasks.Contracts.Requests;
+using Application.Features.Tasks.Queries;
+using Application.Features.Users.Commands;
 using Application.Features.Users.Contracts.Requests;
 using Application.Features.Users.Queries;
 using DataTables.AspNet.Core;
@@ -9,7 +11,7 @@ namespace Presentation.Controllers;
 
 //[ApiController]
 //[Route("api/[controller]")]
-public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUserCommand, UpdateUserCommand updateUserCommand, DeleteUserCommand deleteUserCommand, GetAllUsersQuery getAllUsersQuery , GetUserQuery getUserQuery ) : ControllerBase
+public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUserCommand, UpdateUserCommand updateUserCommand, DeleteUserCommand deleteUserCommand, GetAllUsersQuery getAllUsersQuery , GetUserQuery getUserQuery, GetAvailableUsersForTaskQuery getAvailableUsersForTaskQuery ) : ControllerBase
 {
 
     public IActionResult Index()
@@ -63,6 +65,14 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
 
         return HandleResult(result);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> GetAvailableUsersForTask([FromBody] GetAvailableUsersForTask request)
+    {
+        var result = await getAvailableUsersForTaskQuery.Handle(request);
+        return HandleResult(result);
+    }
+
 
     [HttpGet]
     public async Task<IActionResult> GetById(Guid id)

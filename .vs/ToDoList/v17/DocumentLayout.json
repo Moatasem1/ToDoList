@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\tasks\\contracts\\requests\\createtaskrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\tasks\\contracts\\requests\\createtaskrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\domain\\entities\\task\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E528BBC3-1C26-8C35-F682-23718816ADCD}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\task\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\application\\features\\users\\specifications\\userspecfications.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F80C4E72-27A0-12B5-0634-DD5C11CFB0C1}|Application\\Application.csproj|solutionrelative:application\\features\\users\\specifications\\userspecfications.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|c:\\users\\moatasemalnaimat\\desktop\\todolist\\presentation\\views\\tasks\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{26BB4B99-E4DB-8D6F-9A99-39E9DFD5E68A}|Presentation\\Presentation.csproj|solutionrelative:presentation\\views\\tasks\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,56 +30,56 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "index.cshtml",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\index.cshtml",
-              "RelativeDocumentMoniker": "Presentation\\Views\\Users\\index.cshtml",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\index.cshtml",
-              "RelativeToolTip": "Presentation\\Views\\Users\\index.cshtml",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAAEYAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-17T06:09:20.266Z",
+              "DocumentIndex": 1,
+              "Title": "TasksController.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TasksController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\TasksController.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\TasksController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\TasksController.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwB8AAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-19T08:45:03.259Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Presentation\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Presentation\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAkwDwAAAAEAAAAAAAAAA==",
+              "Title": "CreateTaskRequest.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
+              "RelativeDocumentMoniker": "Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
+              "RelativeToolTip": "Application\\Features\\Tasks\\Contracts\\Requests\\CreateTaskRequest.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-17T08:11:38.66Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-08-19T10:19:47.88Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\Edit.cshtml",
-              "RelativeDocumentMoniker": "Presentation\\Views\\Users\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Users\\Edit.cshtml",
-              "RelativeToolTip": "Presentation\\Views\\Users\\Edit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-18T08:10:26.955Z",
+              "DocumentIndex": 2,
+              "Title": "Task.cs",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Domain\\Entities\\Task\\Task.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Task\\Task.cs",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Domain\\Entities\\Task\\Task.cs",
+              "RelativeToolTip": "Domain\\Entities\\Task\\Task.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwCoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-19T10:05:56.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UserSpecfications.cs",
-              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
-              "RelativeDocumentMoniker": "Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
-              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
-              "RelativeToolTip": "Application\\Features\\Users\\Specifications\\UserSpecfications.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAmwCIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-17T12:21:16.099Z"
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Tasks\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Presentation\\Views\\Tasks\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\MoatasemAlNaimat\\Desktop\\ToDoList\\Presentation\\Views\\Tasks\\Edit.cshtml",
+              "RelativeToolTip": "Presentation\\Views\\Tasks\\Edit.cshtml",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAAALQAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-19T08:50:49.029Z",
+              "EditorCaption": ""
             }
           ]
         }

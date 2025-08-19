@@ -42,6 +42,14 @@
             &copy; 2025 - Presentation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    @* global loader *@
+    <div id="global-loader" class="d-none position-fixed w-100 h-100 top-0 start-0 bg-white bg-opacity-75 d-flex justify-content-center align-items-center" style="z-index: 1050;">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -56,6 +64,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-demi"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@vuelidate/core"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@vuelidate/validators"></script>
+    <script src="https://kit.fontawesome.com/6c455eb206.js" crossorigin="anonymous"></script>
 
     
     <!-- DataTables Buttons JS and dependencies -->
@@ -71,10 +80,18 @@
              id: '47403B8E-B946-4E55-BACA-F0CAB5D3B2C4',
             name: 'Moatasem Al-Naimat'
         });
+
+        window.loader = {
+        show: function () {
+             $('#global-loader').removeClass('d-none');
+        },
+        hide: function () {
+             $('#global-loader').addClass('d-none');
+        }
+    };
     </script>
 
     <script>
-        
         Vue.createApp({
             data(){
                 return {

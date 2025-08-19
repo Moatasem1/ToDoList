@@ -20,7 +20,7 @@ public sealed class CreateTaskCommand(IReadOnlyRepository<User> userReadOnlyRepo
 
         var task = taskCreationResult.Value;
 
-        foreach(var userID in request.AssignToIds)
+        foreach(var userID in request.AssignedToIds)
         {
             var userAssignmentCreationResult = UserTaskAssignment.Create(task.Id, userID, Domain.Entities.Task.TaskStatus.NotStarted.Id);
             if (userAssignmentCreationResult.IsFailure) return userAssignmentCreationResult.Error;
@@ -41,7 +41,7 @@ public sealed class CreateTaskCommand(IReadOnlyRepository<User> userReadOnlyRepo
 
         if(taskCount==1) return Error.ValueAlreadyExists(nameof(CreateTaskCommand),nameof(Domain.Entities.Task.Task.Name),request.Name);
 
-        foreach (var userId in request.AssignToIds)
+        foreach (var userId in request.AssignedToIds)
         {
             var userCount = await userReadOnlyRepo.Count(new UserSpecfications(userId));
 

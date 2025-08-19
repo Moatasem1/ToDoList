@@ -37,3 +37,7 @@ body {
 .py-2px{
   padding-block: 2px;
 }
+
+.border-dashed {
+  border-style: dashed !important;
+}

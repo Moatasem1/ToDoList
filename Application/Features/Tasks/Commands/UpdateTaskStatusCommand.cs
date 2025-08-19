@@ -21,7 +21,7 @@ public sealed class UpdateTaskStatusCommand(IRepository<Domain.Entities.Task.Tas
 
         var assignment = task.UserAssigments.First(u=>u.UserId == userId);
 
-        var updationResult = assignment.Update(request.TaskStatus);
+        var updationResult = assignment.Update(request.Status);
 
         if(updationResult.IsFailure) return updationResult.Error;
 

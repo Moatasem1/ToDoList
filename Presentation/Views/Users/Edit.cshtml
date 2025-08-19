@@ -38,14 +38,13 @@
             </div>
         </div>
     </form>
-    {{userForm}}
 </section>
 
 @section Scripts {
     <script type='module'>
         import { ImageUploader } from '/js/components/image-uploader.js';
         const { useVuelidate } = window.Vuelidate;
-        const { required, email, minLength } = window.VuelidateValidators;
+        const { required, email, minLength , maxLength} = window.VuelidateValidators;
 
         var UsersEdit= Vue.createApp({
             components:{
@@ -60,9 +59,9 @@
                     image:null
                   },
                   rules: {
-                    firstName: {required},
-                    lastName:{required},
-                    email: {required},
+                    firstName: {required, minLength: minLength(3), maxLength: maxLength(20)},
+                    lastName:{required, minLength: minLength(3), maxLength: maxLength(20)},
+                    email: {required, email},
                     image:{}
                   },
                   v$:null,
@@ -93,19 +92,25 @@
                     axios.post('/Users/Create',this.userForm)
                     .then(resp=>{
                         console.log('added successfully');
-                        this.navigateToUsersPage();
+                        Swal.fire('Created!',"User has been created",'success')
+                        .then(()=>{
+                            this.navigateToUsersPage();
+                        });
                     });
                 },
                 navigateToUsersPage(){
                     window.location.href=`/Users/Index`; 
                 },
                 fetchUser(id){
+                    loader.show();
                     axios.get(`/Users/GetById/${id}`)
                     .then(resp=>{
                         this.fillFormWithUserInfo(resp.data.responseData);
+                        loader.hide();
                     })
                     .catch(error=>{
                         this.navigateToUsersPage();
+                        loader.hide();
                     })
                 },
                 fillFormWithUserInfo(user){
@@ -120,7 +125,10 @@
                         isImageUpdated: this.isImageUpdated
                     })
                     .then(resp=>{
-                        this.navigateToUsersPage();
+                        Swal.fire('Updated!',"User has been updated",'success')
+                         .then(()=>{
+                            this.navigateToUsersPage();
+                        });
                     });
                 },
                 updateImage(imageBase64){

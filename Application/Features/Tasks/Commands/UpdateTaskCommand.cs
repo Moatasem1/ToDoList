@@ -22,7 +22,7 @@ public sealed class UpdateTaskCommand(AssignTaskToUsersCommand assignCommand, IR
 
         taskRepo.Update(task);
 
-       var assignResult =  await assignCommand.Handle(new AssignTaskToUserRequest(task.Id, request.AssignToIds));
+       var assignResult =  await assignCommand.Handle(new AssignTaskToUserRequest(task.Id, request.AssignedToIds));
        if (assignResult.IsFailure) return assignResult.Error;
 
         return true;

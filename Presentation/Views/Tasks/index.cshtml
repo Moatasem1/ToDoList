@@ -15,8 +15,8 @@
         }
 
        .assigned-user-item:not(:first-child){
-         transform: translateX(-10px);
-       }
+         margin-left: -12px;
+        }
 
         .task-status--not-started {
             background-color: #f0f0f0;
@@ -32,20 +32,17 @@
             background-color: #d4edda;
             color: #155724;
         }
-
-        .tasks-filter{
-
-        }
-        
-
     </style>
 }
 
 <section id='tasks-index' class="">
-    <div class="d-flex align-items-center gap-3 mb-3 fs-14px">
-        <span role="button" @@click="updateActiveFilter(filter.id)" v-for="(filter,index) in filters" :key='filter.id' class="border border-2 text-capitalize border-secondary-emphasis px-2 py-2px rounded "
-         :class="{'bg-primary text-white':filter.id==activeFilter}">{{filter.name}}</span>
-    </div>
+   <div class="d-flex justify-content-between align-items-center mb-3">
+     <ul class="list-unstyled mb-0 d-flex align-items-center gap-3 fs-14px">
+       <li role="button" @@click="updateActiveFilter(filter.id)" v-for="(filter,index) in filters" :key='filter.id' class="border border-2 text-capitalize border-secondary-emphasis px-2 py-2px rounded "
+         :class="{'bg-primary text-white':filter.id==activeFilter}">{{filter.name}}</li>
+    </ul>
+    <a href='/Tasks/Edit' class="btn btn-primary" @@click="createTask">Create Task</a>
+   </div>
      @* tasks list *@
     <ul class="list-unstyled row row-cols-3 gy-4 align-items-stretch">
         <li v-for="(task,index) in tasks" :key='task.id' class="col d-flex flex-column">
@@ -53,7 +50,7 @@
             <div class="shadow-sm border p-3 rounded grow w-100 d-flex flex-column flex-grow-1">
                 <div class="d-flex align-items-center justify-content-between gap-2">
                     <h2 class="fs-5 fw-bold text-capitalize">{{task.name}}</h2>
-                    <span class="fs-13px text-capitalize rounded-pill px-2 py-2px" :class='getStatusClass(task.statusId)'>{{task.statusName}}</span>
+                    <span class="fs-13px text-capitalize rounded-pill text-nowrap px-2 py-2px" :class='getStatusClass(task.statusId)'>{{task.statusName}}</span>
                 </div>
                 @* assigned by, date and duration info *@
                 <div class="d-flex flex-column gap-2 mb-4 flex-grow-1">
@@ -68,7 +65,7 @@
                    <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2">
                         <span>By</span>
                         <div class="border border-2 user-image--sm rounded-circle overflow-hidden">
-                            <img class="img-fluid" :src="task.assignedBy.image" :alt='task.assignedBy.name'>
+                            <img class="img-fluid" :src="task.assignedBy.image ? task.assignedBy.image : '/images/user-placeholder.png'" :alt='task.assignedBy.name'>
                         </div>
                         <span>{{task.assignedBy.name}}</span>
                    </div>
@@ -79,23 +76,24 @@
                     @* assigned users list *@
                     <ul class="list-unstyled d-flex align-items-center ">
                         <li v-for="(user,index) in task.assignedTo" :key='user.id' class="border border-2 user-image rounded-circle overflow-hidden assigned-user-item">
-                            <img class="img-fluid" :src="user.image" :alt='user.name'>
+                            <img class="img-fluid" :src="user.image ? user.image : '/images/user-placeholder.png'" :alt='user.name'>
                         </li>
                         @* <span class="fs-14px">+2</span> *@
                     </ul>
                     <div class="d-flex align-items-center gap-2">
-                        <button class='btn btn-sm btn-danger' v-if="activeFilter==@((int)GetTaskFilter.Created)">Delete</button>
+                        <button @@click='deleteTask(task)' class='btn btn-sm btn-danger' v-if="activeFilter==@((int)GetTaskFilter.Created)">Delete</button>
                         <a class='btn btn-sm btn-secondary' v-if="activeFilter==@((int)GetTaskFilter.Created)" :href="`/Tasks/Edit/${task.id}`">Edit</a>
+                        <button  @@click='updateTaskStatusAsync(task.id,@(Domain.Entities.Task.TaskStatus.InProgress.Id))' v-if="activeFilter==@((int)GetTaskFilter.Assigned) && task.statusId==@(Domain.Entities.Task.TaskStatus.NotStarted.Id)" class='btn btn-sm btn-success'>Start</button>
+                        <button  @@click='updateTaskStatusAsync(task.id,@(Domain.Entities.Task.TaskStatus.Completed.Id))' v-if="activeFilter==@((int)GetTaskFilter.Assigned) && task.statusId==@(Domain.Entities.Task.TaskStatus.InProgress.Id)" class='btn btn-sm btn-success'>Complete</button>
                         <button @@click='showTaskInfoModal(task)' class='btn btn-sm btn-primary'>Show</button>
-                        @* <button class='btn btn-sm btn-primary'>Complete</button> *@
                     </div>
                </footer>
             </div>
         </li>
     </ul>
     @* task info modal *@
-    <div class="modal fade" tabindex="-1" id='taskInfoModal' data-bs-backdrop="static" >
-        <div class="modal-dialog modal-dialog-scrollable ">
+    <div  class="modal fade" tabindex="-1" id='taskInfoModal' data-bs-backdrop="static" >
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content "v-if='selectedTask'>
             <div class="modal-header">
                 <h5 class="modal-title">Task Details</h5>
@@ -122,8 +120,8 @@
                 <ul class="list-unstyled d-flex flex-column mb-0">
                     <li v-for='(user,index) in selectedTask.assignedTo' :key='user.id'
                      class="d-flex align-items-center gap-2 border-bottom py-2">
-                        <div class="border border-2 user-image rounded-circle overflow-hidden assigned-user-item">
-                            <img class="img-fluid" :src="user.image" :alt='user.name'>
+                        <div class="border border-2 user-image rounded-circle overflow-hidden">
+                            <img class="img-fluid" :src="user.image ? user.image : '/images/user-placeholder.png'" :alt='user.name'>
                         </div>
                         <p class="mb-0 text-capitalize">{{user.name}}</p>
                     </li>
@@ -157,11 +155,14 @@
             },
             methods: {
                 fetchTasks() {
+                    loader.show();
                     axios.get(`/Tasks/Get/?taskFilter=${this.activeFilter}`)
                         .then(resp => {
                             this.tasks = resp.data.responseData;
+                            loader.hide();
                         })
                         .catch(error => {
+                            loader.hide();
                             console.error("Error fetching tasks:", error);
                         });
                 },
@@ -183,7 +184,43 @@
                     const modalEl = document.getElementById('taskInfoModal');
                     const bsModal = new bootstrap.Modal(modalEl);
                     bsModal.show();
-                     @* $("#taskInfoModal").show(); *@
+                },
+                deleteTask(task){
+                    Swal.fire({
+                        title:`Are You Sure?`,
+                        text:`You won't be able to revert this!`,
+                        icon:'warning',
+                        showCancelButton:true,
+                        confirmButtonText:'Yes, delete it!',
+                        cancelButtonText:'Cancel',
+                        customClass: {
+                            confirmButton: 'btn btn-danger',
+                            cancelButton: 'btn btn-secondary'
+                        }
+                    }).then(result=>{
+                        if(result.isConfirmed)
+                            this.deleteTaskAsync(task.id);
+                    });
+                },
+                deleteTaskAsync(taskId){
+                    axios.delete(`/Tasks/Delete/${taskId}`)
+                    .then(resp => {
+                        this.fetchTasks();
+                         Swal.fire('Deleted!',"Task has been deleted",'success');
+                    })
+                    .catch(error => {
+                        console.error("Error deleting task:", error);
+                    });
+                },
+                updateTaskStatusAsync(taskId, statusId) {
+                    axios.patch(`/Tasks/UpdateStatus/${taskId}`,
+                     { status: statusId })
+                    .then(resp => {
+                        this.fetchTasks();
+                    })
+                    .catch(error => {
+                        console.error("Error updating task status:", error);
+                    });
                 }
             },
             mounted() {

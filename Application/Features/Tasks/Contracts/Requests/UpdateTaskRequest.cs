@@ -2,7 +2,7 @@
 
 namespace Application.Features.Tasks.Contracts.Requests;
 
-public record UpdateTaskRequest(string Name,string? Description, DateTime StartDate,DateTime EndDate, List<Guid> AssignToIds);
+public record UpdateTaskRequest(string Name,string? Description, DateTime StartDate,DateTime EndDate, List<Guid> AssignedToIds);
 
 public class UpdateTaskRequestValidator: AbstractValidator<UpdateTaskRequest> {
 
@@ -19,7 +19,7 @@ public class UpdateTaskRequestValidator: AbstractValidator<UpdateTaskRequest> {
 
         RuleFor(t => t.StartDate)
             .NotEmpty()
-            .Must(startDate => startDate > DateTime.Now);
+            .Must(startDate => startDate.AddMinutes(3) > DateTime.UtcNow);
 
         RuleFor(t => t.EndDate)
            .NotEmpty()

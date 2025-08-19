@@ -10,7 +10,7 @@ namespace Presentation.Controllers;
 
 //[ApiController]
 //[Route("api/[controller]")]
-public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand, DeleteTaskCommand deleteTaskCommand, CurrentUserService currentUserService, GetTasks getTasks, UpdateTaskStatusCommand updateTaskStatusCommand, IUnitOfWork unitOfWork) : ControllerBase
+public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand, DeleteTaskCommand deleteTaskCommand, CurrentUserService currentUserService, GetTasks getTasks, UpdateTaskStatusCommand updateTaskStatusCommand,GetTaskByIdQuery getTaskByIdQuery, IUnitOfWork unitOfWork) : ControllerBase
 {
     public IActionResult Index()
     {
@@ -29,7 +29,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     /// <param name="request"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> Create(CreateTaskRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateTaskRequest request)
     {
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
@@ -48,8 +48,8 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, UpdateTaskRequest request)
+    [HttpPut]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTaskRequest request)
     {
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
@@ -62,7 +62,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return HandleResult(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete]
     public async Task<IActionResult> Delete(Guid id)
     {
         if (currentUserService.UserId == null)
@@ -87,9 +87,20 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return HandleResult(result);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        if (currentUserService.UserId == null)
+            return HandleResult<bool>(Error.Unauthorized());
 
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateTaskStatus(UpdateTaskStatusRequest request, Guid id)
+        var result = await getTaskByIdQuery.Handle(id, currentUserService.UserId.Value);
+
+        return HandleResult(result);
+    }
+
+
+    [HttpPatch]
+    public async Task<IActionResult> UpdateStatus([FromBody] UpdateTaskStatusRequest request, Guid id)
     {
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());

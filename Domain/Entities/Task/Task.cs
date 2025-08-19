@@ -129,7 +129,7 @@ public class Task : IAggregateRoot
 
     public static Result<bool, Error> ValidateStartDate(DateTime startDate)
     {
-        if (startDate <= DateTime.Now)
+        if (startDate.AddMinutes(3) <= DateTime.UtcNow)
             return Error.ValueInvalidWithMessage(nameof(Task),$"{nameof(startDate)} must be a future date and time");
 
         return true;
