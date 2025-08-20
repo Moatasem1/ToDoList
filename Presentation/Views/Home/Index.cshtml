@@ -1,18 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    <style>
+        .feature-icon {
+      font-size: 2.5rem;
+      color: #0d6efd;
+    }
+    .section-padding {
+      padding: 4rem 0;
+    }
+    .hero-bg {
+      background: linear-gradient(to right, #0d6efd, #6f42c1);
+      color: white;
+    }
+    </style>
 }
 
 <div id="app" class="text-center">
-  <h1 class="display-4 mb-4 fw-bold">Welcome to <span class="text-primary">Todo</span>!</h1>
-  <p class="fw-semibold"><em>Your smart, simple, and stylish companion to conquer tasks and crush your goals every day.</em></p>
-  <p>Let’s make productivity fun and effortless</p>
+    @* Hero Area *@
+   <section class="hero-bg text-white text-center py-5 rounded">
+    <div class="container">
+      <h1 class="display-4 fw-bold"><span class="text-">Organize Your Day</h1>
+      <p class="lead mt-3">Your smart, simple, and stylish companion to conquer tasks and crush your goals every day.</p>
+      <p class="mb-4">Let’s make productivity fun and effortless</p>
+      <a href="/Tasks/Edit" class="btn btn-outline-light btn-lg px-4 fw-semibold">
+        <span class="me-2">Create Your First Task</span>
+      </a>
+    </div>
+  </section>
+
+  @* Features Section *@
+  <section class="section-padding text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-5">What Makes <span class="text-primary">Todo</span> Awesome?</h2>
+      <div class="row g-4">
+
+        <div v-for='(feature,index) in features' class="col-md-4">
+          <div class="p-4 bg-white shadow-sm rounded h-100">
+            <i :class="feature.icon + ' feature-icon mb-3'"></i>
+            <h5 class="fw-semibold">{{ feature.title }}</h5>
+            <p class="text-muted">{{ feature.description }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 </div>
 
 @section Scripts{
     <script>
          Vue.createApp({
             data(){
-                return {message:"hello from index page"}
+                return {
+                    features:[
+                        {
+                            title: "Easy Task Management",
+                            icon: "fas fa-check-circle",
+                            description: "Create, update, and complete tasks effortlessly with a few clicks."
+                        },
+                        {
+                            title: "Team Collaboration",
+                            icon: "fas fa-users",
+                            description: "Assign tasks, track progress, and work together seamlessly."
+                        },
+                        {
+                            title: "Fast & Responsive",
+                            icon: "fas fa-bolt",
+                            description: "Enjoy a blazing fast experience across all devices and screens."
+                        },
+                        {
+                            title: "Smart Scheduling",
+                            icon: "fas fa-calendar-alt",
+                            description: "Plan your day, week, or month with built-in date and time pickers."
+                        },
+                        {
+                            title: "Reminders & Notifications",
+                            icon: "fas fa-bell",
+                            description: "Never miss a deadline with customizable notifications and alerts."
+                        },
+                        {
+                            title: "Progress Tracking",
+                            icon: "fas fa-chart-line",
+                            description: "Visualize your accomplishments and stay motivated."
+                        },
+                    ]
+                }
             }
          }).mount("#app");
     </script>

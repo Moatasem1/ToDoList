@@ -9,13 +9,15 @@ public class User : IAggregateRoot
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
+
+    public string Password { get; private set; }
     public byte[]? Image { get; private set; }
 
     private User() { }
 
     public string FullName => $"{FirstName} {LastName}";
 
-    public static Result<User,Error>Create(string firstName,string lastName,string email, byte[]? image)
+    public static Result<User,Error>Create(string firstName,string lastName,string email,string password, byte[]? image)
     {
         var firstNameValidation = ValidateFirstName(firstName);
         if (firstNameValidation.IsFailure)
@@ -28,6 +30,10 @@ public class User : IAggregateRoot
         var emailValidation = ValidateEmail(email);
         if (emailValidation.IsFailure)
             return emailValidation.Error;
+
+        var passwordValidation = ValidatePassword(password);
+        if (passwordValidation.IsFailure)
+            return passwordValidation.Error;
 
 
         var user = new User
@@ -85,6 +91,15 @@ public class User : IAggregateRoot
 
         if (lastName.Length < 3 || lastName.Length > 20)
             return Error.ValueInvalid(nameof(User), nameof(LastName));
+
+        return true;
+    }
+
+    public static Result<bool, Error> ValidatePassword(string passwrod)
+    {
+        passwrod = passwrod.Trim();
+        if (string.IsNullOrEmpty(passwrod))
+            return Error.ValueRequired(nameof(User), nameof(passwrod));
 
         return true;
     }

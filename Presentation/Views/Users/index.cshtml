@@ -71,6 +71,7 @@
                     axios.delete(`/Users/Delete?id=${id}`)
                     .then(resp=>{
                         Swal.fire('Deleted!',"User has beed deleted",'success');
+                       this.UsersTable.ajax.reload(null, false);
                     })
                 },
                 navigateToEdit(id){
@@ -78,7 +79,8 @@
                 }
             },
             mounted() {
-                $('#kt-users-table').DataTable({
+              this.UsersTable =  $('#kt-users-table').DataTable({
+                   responsive:true,
                    paging:true,
                    searching:true,
                    ordering:true,

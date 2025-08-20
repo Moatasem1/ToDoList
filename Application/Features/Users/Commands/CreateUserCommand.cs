@@ -13,14 +13,14 @@ public class CreateUserCommand(IBase64ByteConverter base64ByteConverter,IReposit
 {
    
     public async Task<Result<bool, Error>> Handle(CreateUserRequest request)
-    {
-        
+    {   
         var canHandel = await CanHandle(request);
         if (canHandel.IsFailure) return canHandel.Error;
 
         var imageToAdd = !string.IsNullOrEmpty(request.Image) ? base64ByteConverter.Base64ToBytes(request.Image) : null;
 
-        var creationResult = User.Create(request.FirstName, request.LastName,request.Email, imageToAdd);
+        //generate password
+        var creationResult = User.Create(request.FirstName, request.LastName,request.Email,"fake-password", imageToAdd);
         if (creationResult.IsFailure) return creationResult.Error;
 
         await userRepo.Add(creationResult.Value);

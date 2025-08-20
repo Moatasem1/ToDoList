@@ -4,14 +4,19 @@ using Application.Features.Users.Commands;
 using Application.Features.Users.Contracts.Requests;
 using Application.Features.Users.Queries;
 using DataTables.AspNet.Core;
+using Domain.Common;
 using Domain.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
-//[ApiController]
-//[Route("api/[controller]")]
-public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUserCommand, UpdateUserCommand updateUserCommand, DeleteUserCommand deleteUserCommand, GetAllUsersQuery getAllUsersQuery , GetUserQuery getUserQuery, GetAvailableUsersForTaskQuery getAvailableUsersForTaskQuery ) : ControllerBase
+public class UsersController(IUnitOfWork unitOfWork,
+                            CreateUserCommand createUserCommand,
+                            UpdateUserCommand updateUserCommand,
+                            DeleteUserCommand deleteUserCommand,
+                            GetAllUsersQuery getAllUsersQuery ,
+                            GetUserQuery getUserQuery,
+                            GetAvailableUsersForTaskQuery getAvailableUsersForTaskQuery ) : ControllerBase
 {
 
     public IActionResult Index()
@@ -28,6 +33,9 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         var result = await createUserCommand.Handle(request);
 
         if (result.IsSuccess)
@@ -39,6 +47,9 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
     [HttpPut]
     public async Task<IActionResult> Update([FromBody] UpdateUserRequest request, Guid id)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         var result = await updateUserCommand.Handle(id,request);
 
         if (result.IsSuccess)
@@ -69,6 +80,9 @@ public class UsersController(IUnitOfWork unitOfWork,CreateUserCommand createUser
     [HttpPost]
     public async Task<IActionResult> GetAvailableUsersForTask([FromBody] GetAvailableUsersForTask request)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         var result = await getAvailableUsersForTaskQuery.Handle(request);
         return HandleResult(result);
     }

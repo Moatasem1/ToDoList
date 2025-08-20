@@ -3,7 +3,7 @@ export const ImageUploader = {
     <div class="mb-3 d-flex flex-column flex-grow-1">
       <label class="form-label d-block">Image</label>
 
-      <div class="flex-grow-1 position-relative border rounded d-flex justify-content-center align-items-center bg-light p-3 overflow-hidden"
+      <div class="flex-grow-1 position-relative border rounded d-flex justify-content-center align-items-center  p-3 overflow-hidden bg-white"
            @click="triggerFileInput">
         
         <img v-if="preview" :src="preview" class="position-absolute img-fluid h-100 object-fit-contain" alt="Preview" />

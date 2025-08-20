@@ -31,6 +31,9 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTaskRequest request)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
@@ -51,6 +54,9 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     [HttpPut]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTaskRequest request)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 
@@ -102,6 +108,9 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     [HttpPatch]
     public async Task<IActionResult> UpdateStatus([FromBody] UpdateTaskStatusRequest request, Guid id)
     {
+        if (!ModelState.IsValid)
+            return HandleResult<bool>(ExtractValidationErrors(ModelState));
+
         if (currentUserService.UserId == null)
             return HandleResult<bool>(Error.Unauthorized());
 

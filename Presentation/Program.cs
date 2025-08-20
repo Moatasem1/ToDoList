@@ -59,6 +59,16 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
+builder.Services.AddAuthentication("CookieAuth")
+    .AddCookie("CookieAuth", options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.Cookie.Name = "Todo.Cookie";
+    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,6 +87,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

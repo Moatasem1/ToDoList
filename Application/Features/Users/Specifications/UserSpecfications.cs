@@ -1,6 +1,7 @@
 ﻿using DataTables.AspNet.Core;
 using Domain.Common;
 using Domain.Entities.User;
+using System.Linq.Expressions;
 
 namespace Application.Features.Users.Specifications;
 
@@ -31,6 +32,31 @@ public class UserSpecfications : Specification<User>
 
         }
 
+        var orderedColumn = request.Columns
+        .Where(c => c.IsSortable)
+        .Select((col, index) => new { Column = col, Index = index })
+        .FirstOrDefault(col => col.Column.Sort != null);
+
+        if (orderedColumn != null)
+        {
+            var columnName = orderedColumn.Column.Field;
+            var sortDir = orderedColumn.Column.Sort.Direction;
+
+            var sortMap = new Dictionary<string, Expression<Func<User, object>>>()
+            {
+                ["name"] = u => u.FirstName + " " + u.LastName,
+                ["email"] = u => u.Email
+            };
+
+            if (sortMap.TryGetValue(columnName, out var sortExpr))
+            {
+                if (sortDir == SortDirection.Descending)
+                    ApplyOrderByDescending(sortExpr);
+                else
+                    ApplyOrderBy(sortExpr);
+            }
+        }
+
         if (doPagination)
             ApplyPaging(request.Start, request.Length);
     }
@@ -41,5 +67,9 @@ public class UserSpecfications : Specification<User>
         Criteria = u => (u.FirstName + " " + u.LastName).ToLower().Contains(searchQuery) &&
                         !excludedUserIds.Contains(u.Id);
         ApplyPaging(0, pageSize);
+    }
+
+    public UserSpecfications(string email , string hashedPassword) { 
+        Criteria = u=> u.Email == email && u.Password== hashedPassword;
     }
 }

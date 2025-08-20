@@ -36,18 +36,18 @@
 }
 
 <section id='tasks-index' class="">
-   <div class="d-flex justify-content-between align-items-center mb-3">
-     <ul class="list-unstyled mb-0 d-flex align-items-center gap-3 fs-14px">
+   <div class="d-flex flex-column flex-sm-row gap-4 justify-content-between align-items-center mb-3">
+     <ul class="order-2 order-sm-1 list-unstyled mb-0 d-flex align-items-center gap-3 fs-14px">
        <li role="button" @@click="updateActiveFilter(filter.id)" v-for="(filter,index) in filters" :key='filter.id' class="border border-2 text-capitalize border-secondary-emphasis px-2 py-2px rounded "
-         :class="{'bg-primary text-white':filter.id==activeFilter}">{{filter.name}}</li>
+         :class="{'bg-primary text-white':filter.id==activeFilter, 'bg-white':filter.id!=activeFilter}">{{filter.name}}</li>
     </ul>
-    <a href='/Tasks/Edit' class="btn btn-primary" @@click="createTask">Create Task</a>
+    <a href='/Tasks/Edit' class="order-1 order-sm-2 btn btn-primary" @@click="createTask">Create Task</a>
    </div>
      @* tasks list *@
-    <ul class="list-unstyled row row-cols-3 gy-4 align-items-stretch">
+    <ul class="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 gy-4 align-items-stretch">
         <li v-for="(task,index) in tasks" :key='task.id' class="col d-flex flex-column">
             @* task card *@
-            <div class="shadow-sm border p-3 rounded grow w-100 d-flex flex-column flex-grow-1">
+            <div class="shadow-sm border p-3 rounded grow w-100 d-flex flex-column flex-grow-1 bg-white">
                 <div class="d-flex align-items-center justify-content-between gap-2">
                     <h2 class="fs-5 fw-bold text-capitalize">{{task.name}}</h2>
                     <span class="fs-13px text-capitalize rounded-pill text-nowrap px-2 py-2px" :class='getStatusClass(task.statusId)'>{{task.statusName}}</span>
@@ -59,7 +59,7 @@
                         <span>{{formateDate(task.startDate)}}</span>
                         <span>-</span>
                         <span>{{formateDate(task.endDate)}}</span>
-                        <span>{{DateDifference(task.startDate,task.endDate)}} days</span>
+                        <span v-if='DateDifference(task.startDate,task.endDate)!=0'>{{DateDifference(task.startDate,task.endDate)}} days</span>
                     </div>
                     @* assigned by *@
                    <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2">
@@ -106,7 +106,7 @@
                     <span>{{formateDate(selectedTask.startDate)}}</span>
                     <span>-</span>
                     <span>{{formateDate(selectedTask.endDate)}}</span>
-                    <span>{{DateDifference(selectedTask.startDate,selectedTask.endDate)}} days</span>
+                    <span v-if='DateDifference(selectedTask.startDate,selectedTask.endDate)!=0'>{{DateDifference(selectedTask.startDate,selectedTask.endDate)}} days</span>
                 </div>
                  <div v-if='activeFilter==@((int)GetTaskFilter.Assigned)' class="d-flex gap-2 mb-2">
                         <span>By</span>
@@ -167,7 +167,7 @@
                         });
                 },
                 formateDate(date){
-                    return moment(date).format('D MMM, YYYY');
+                    return moment(date).format('D MMM, YYYY h:mm A');
                 },
                 DateDifference(start,end){
                     return moment(end).diff(moment(start),'days');

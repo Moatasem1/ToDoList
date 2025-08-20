@@ -1,0 +1,75 @@
+﻿@{
+    @* Layout = null; *@
+    <style>
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>   
+}
+
+<section id='login-form'>
+    <form  class="login-form mx-auto">
+        <h1 class="fs-2 fw-semibold mb-3">TODO</h1>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input @@blur='touchField("email")' v-model="loginForm.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div v-if='v$ && v$.email.$error' id="emailHelp" class="text-danger small">{{v$.email.$errors[0].$message}}</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input @@blur='touchField("password")' v-model="loginForm.password" type="password" class="form-control" id="exampleInputPassword1">
+            <div v-if='v$ && v$.password.$error' id="passwordHelp" class="text-danger small">{{v$.password.$errors[0].$message}}</div>
+        </div>
+        <button role="button" @@click='submitForm' type="button" class="btn btn-primary w-100">Login</button>
+    </form>
+</section>
+
+ <script type='module'>
+        const { useVuelidate } = window.Vuelidate;
+        const { required, email, minLength, maxLength, helpers} = window.VuelidateValidators;        
+
+        var LoginForm= Vue.createApp({
+            components:{
+            },
+            data() {
+                return {
+                 loginForm: {
+                        email: '',
+                        password: ''
+                  },
+                  v$: null,
+                  rules:{
+                    email: { required, email },
+                    password: { required, minLength: minLength(6), maxLength: maxLength(100) }
+                  }
+                }
+            },
+            computed:{
+               
+            },
+            methods: {
+                touchField(fieldName){
+                    this.v$[fieldName].$touch()
+                },
+                submitForm(){
+                    this.v$.$validate();
+                    if(this.v$.$error) return;
+                    this.loginAsync();
+                   
+                },
+                loginAsync(){
+                    axios.post('/Account/Login', this.loginForm)
+                        .then(response => {
+                            this.navigateToTasksPage();
+                        });
+                },
+                navigateToTasksPage(){
+                    window.location.href=`/Tasks/Index`; 
+                },
+            },
+            async mounted() {
+                this.v$ = useVuelidate(this.rules,this.loginForm);
+            }
+        }).mount("#login-form");
+    </script>

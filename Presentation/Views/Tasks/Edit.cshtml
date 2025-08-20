@@ -17,7 +17,7 @@
             <button :disabled='!(v$ && v$.$anyDirty) || v$.$invalid' type="button" @@click='submitForm' class='btn btn-primary'>Save</button>
         </div>
     </div>
-    <form class='row'>
+    <form class='d-flex flex-column flex-lg-row gap-4'>
         @* Task Details *@
         <fieldset class="flex-grow-1 col">
             <div class="mb-3">
@@ -27,7 +27,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Start Date</label>
-                <input :disabled='isEditMode' @@blur='touchField("startDate")' v-model='taskForm.startDate' type="datetime-local" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input  @@blur='touchField("startDate")' v-model='taskForm.startDate' type="datetime-local" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 <span v-if='v$ && v$.startDate.$error' id="emailHelp" class="text-danger small">{{v$.startDate.$errors[0].$message}}</span>
             </div>
             <div class="mb-3">
@@ -42,12 +42,12 @@
             </div>
         </fieldset>
         @* User Assignment *@
-        <div class="col d-flex flex-column">
+        <div class="col d-flex flex-column flex-grow-1">
             <label for="user-assignment" class="form-label">Assign Users</label>
-            <div class='border flex-grow-1 p-3 d-flex flex-column'>
+            <div class='border flex-grow-1 p-3 d-flex flex-column bg-white'>
                  @* selected users *@
                 <div class=" mb-3 ">
-                    <ul class="list-unstyled row row-cols-4 gy-3 align-items-stretch mb-0 flex-grow-1 ">
+                    <ul class="list-unstyled row row-cols-3 row-cols-sm-4 row-cols-md-5 gy-3 align-items-stretch mb-0 flex-grow-1 ">
                         <li v-for="user in selectedUsers" :key="user.id" class="col d-flex flex-column">
                             @* selected user card *@
                            <div class="p-2 flex-grow-1 d-flex flex-column align-items-center border border-success border-dashed border-opacity-10 rounded position-relative">
@@ -63,7 +63,7 @@
               <div class="flex-grow-1 d-flex flex-column">
                 <input @@input='fetchUsers' v-model='searchQuery' type="text" class="form-control mb-4" placeholder="Search users...">
                 @* users to search and select *@
-                <ul class="list-unstyled row row-cols-4 gy-3 align-items-stretch mb-0 flex-grow-1">
+                <ul class="list-unstyled row row-cols-3 row-cols-sm-4 row-cols-md-5 gy-3 align-items-stretch mb-0 flex-grow-1">
                     @* user card *@
                     <li v-for="user in users" :key="user.id" class="col">
                         <input type="checkbox" :id="'user-' + user.id" v-model="taskForm.assignedToIds" :value="user.id" class="form-check-input d-none">
@@ -89,16 +89,20 @@
         const { useVuelidate } = window.Vuelidate;
         const { required, email, minLength, maxLength, helpers} = window.VuelidateValidators;
 
-        const isTodayOrFuture = helpers.withMessage(
-        'Date and time must be in the future or now',
-        value => {
-            if (!value) return true; // If no value, consider it valid (not required)
+        const isTodayOrFutureIfChanged = (getOriginalStartDate) =>
+        helpers.withMessage(
+            'Date and time must be in the future or now',
+            function(value) {
+                if (!value) return true;
+                const original = getOriginalStartDate();
+                if (value === original) return true;
 
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - 1);
-            const selectedDate = new Date(value);
-            return selectedDate >= now;
-        });
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - 1); 
+                const selected = new Date(value);
+                return selected >= now;
+            }
+        );
 
         const isAfterStartDate = helpers.withMessage(
         'End date must be after start date',
@@ -126,7 +130,7 @@
                   rules: {
                     name: {required, minLength: minLength(3), maxLength: maxLength(150)},
                     description: {minLength: minLength(3), maxLength: maxLength(1500)},
-                    startDate: {required,isTodayOrFuture},
+                    startDate: {required,isTodayOrFuture: isTodayOrFutureIfChanged(() => this.originalStartDate)},
                     endDate: {
                         required,
                        isAfterStartDate
@@ -134,6 +138,7 @@
                     assignedToIds: {},
                   },
                   v$:null,
+                  originalStartDate: '',
                   users: [],
                   selectedUsers: [],
                   searchQuery: '',
@@ -222,6 +227,7 @@
                     this.taskForm.startDate = task.startDate;
                     this.taskForm.endDate = task.endDate;
                     this.taskForm.assignedToIds = task.assignedTo.map(u => u.id) || [];
+                    this.originalStartDate = task.startDate;
                 },
                 updateTaskAsync(){
                     axios.put(`/Tasks/Update/${this.taskId}`,{

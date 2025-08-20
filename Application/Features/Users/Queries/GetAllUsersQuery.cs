@@ -2,7 +2,6 @@
 using Application.Features.Users.Specifications;
 using Application.Options;
 using Application.Services.Interfaces;
-using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
 using Domain.Common;
 using Domain.Common.Interfaces;

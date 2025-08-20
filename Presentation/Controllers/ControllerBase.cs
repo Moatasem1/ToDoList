@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Presentation.Options;
 
 namespace Presentation.Controllers;
@@ -13,6 +14,16 @@ public abstract class ControllerBase : Controller
 
         return GetErorr(result);
     }
+
+    public static Error ExtractValidationErrors(ModelStateDictionary modelState)
+    {
+        return modelState
+            .Where(e => e.Value?.Errors.Count > 0)
+            .SelectMany(e => e.Value!.Errors
+                .Select(err => Error.ValueInvalidWithMessage(e.Key, err.ErrorMessage)))
+            .First();
+    }
+
 
     private IActionResult GetErorr<T>(Result<T, Error> result)
     {
