@@ -1,0 +1,15 @@
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.footer[b-fhvjq1vla1] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+.nav-link.active[b-fhvjq1vla1]{
+  color: var(--bs-primary) !important;
+  font-weight: bold;
+}

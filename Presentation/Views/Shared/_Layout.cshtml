@@ -12,6 +12,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header id='navbar-app'>
+        @if(CurrentUser.IsAuthenticated){
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">TODO</a>
@@ -28,11 +29,15 @@
                         </li>
                     </ul>
                 </div>
+                @if(CurrentUser.IsAuthenticated){
+                    <a href="/Account/Logout" class="btn btn-outline-primary">Logout</a>
+                }
             </div>
         </nav>
+        }
     </header>
-    <div class="container-fluid flex-grow-1">
-        <main role="main" class="pb-3">
+    <div class="container-fluid flex-grow-1 d-flex flex-column">
+        <main role="main" class="pb-3 flex-grow-1 d-flex flex-column">
             @RenderBody()
         </main>
     </div>
@@ -51,7 +56,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/userService.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
@@ -76,11 +80,6 @@
 
 
     <script>
-        UserService.setUser({
-             id: '47403B8E-B946-4E55-BACA-F0CAB5D3B2C4',
-            name: 'Moatasem Al-Naimat'
-        });
-
         window.loader = {
         show: function () {
              $('#global-loader').removeClass('d-none');
@@ -122,6 +121,12 @@
                     return this.currentPath?.includes(itemPath);
                 }
             },
+            mounted(){
+                @if(!CurrentUser.IsAdmin)
+                {
+                    @: this.navbarItems = this.navbarItems.filter(i=>i.name.toLowerCase()!='users');
+                }
+            }
          }).mount("#navbar-app");
     </script>
     @await RenderSectionAsync("Scripts", required: false)

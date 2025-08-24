@@ -1,0 +1,32 @@
+﻿<h2 style="margin-top:0; color:#333;">Welcome to ToDo!</h2>
+<p style="font-size:16px; color:#555;">Hi {{UserName}},</p>
+
+<p style="font-size:16px; color:#555;">
+You've been added as a user to the ToDo application by the admin. You can now log in and start organizing your tasks efficiently.
+</p>
+
+<h3 style="color:#333; margin-top:30px;">Your Login Details:</h3>
+<table style="width:100%; max-width:400px; background-color:#f4f4f4; padding:15px; border-radius:5px; font-size:16px; color:#333;">
+    <tr>
+        <td><strong>Email:</strong></td>
+        <td>{{UserEmail}}</td>
+    </tr>
+    <tr>
+        <td><strong>Password:</strong></td>
+        <td>{{UserPassword}}</td>
+    </tr>
+</table>
+
+<p style="font-size:16px; color:#555; margin-top:20px;">
+To get started, please log in using the credentials above:
+</p>
+
+<p style="text-align:center; margin:30px 0;">
+    <a href="{{LoginURL}}" style="background-color:#1e1e2f; color:#ffffff; padding:12px 20px; text-decoration:none; border-radius:4px; font-size:16px;">
+        Log In to ToDo
+    </a>
+</p>
+
+<p style="font-size:14px; color:#999;">
+If you did not expect this email, please ignore it. For any issues, contact the admin.
+</p>

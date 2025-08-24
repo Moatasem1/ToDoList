@@ -3,6 +3,7 @@ using Application.Features.Tasks.Contracts.Requests;
 using Application.Features.Tasks.Queries;
 using Domain.Common;
 using Domain.Common.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Services;
 
@@ -10,6 +11,7 @@ namespace Presentation.Controllers;
 
 //[ApiController]
 //[Route("api/[controller]")]
+[Authorize]
 public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand updateTaskCommand, DeleteTaskCommand deleteTaskCommand, CurrentUserService currentUserService, GetTasks getTasks, UpdateTaskStatusCommand updateTaskStatusCommand,GetTaskByIdQuery getTaskByIdQuery, IUnitOfWork unitOfWork) : ControllerBase
 {
     public IActionResult Index()
@@ -17,6 +19,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return View();
     }
 
+    [Authorize(Roles = "Admin")]
     public IActionResult Edit(Guid? id)
     {
         ViewBag.Id = id;
@@ -28,6 +31,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateTaskRequest request)
     {
@@ -51,6 +55,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    [Authorize(Roles = "Admin")]
     [HttpPut]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateTaskRequest request)
     {
@@ -68,6 +73,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return HandleResult(result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete]
     public async Task<IActionResult> Delete(Guid id)
     {
@@ -93,6 +99,7 @@ public class TasksController(CreateTaskCommand createTask, UpdateTaskCommand upd
         return HandleResult(result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<IActionResult> GetById(Guid id)
     {

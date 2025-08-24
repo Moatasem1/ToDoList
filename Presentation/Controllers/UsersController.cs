@@ -6,10 +6,12 @@ using Application.Features.Users.Queries;
 using DataTables.AspNet.Core;
 using Domain.Common;
 using Domain.Common.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class UsersController(IUnitOfWork unitOfWork,
                             CreateUserCommand createUserCommand,
                             UpdateUserCommand updateUserCommand,

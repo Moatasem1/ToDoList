@@ -1,0 +1,43 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body{
+  background-color: #f8f9fa;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.fs-15px{
+  font-size: 15px;
+}
+.fs-14px{
+  font-size: 14px;
+}
+.fs-13px{
+  font-size: 13px;
+}
+.fs-12px{
+  font-size: 12px;
+}
+
+.py-2px{
+  padding-block: 2px;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}

@@ -8,20 +8,22 @@ using Domain.Entities.User;
 
 namespace Application.Features.Auth.Commands;
 
-public class LoginCommand(IReadOnlyRepository<User> userReadOnlyRepo) : IUseCase
+public class LoginCommand(IReadOnlyRepository<Role> roleReadOnlyRepo, IPasswordHasher passwordHasher, IReadOnlyRepository<User> userReadOnlyRepo) : IUseCase
 {
     public async Task<Result<LoginResponse, Error>> Handle(LoginRequest request)
     {
-        //hashpassword before compare
-        var user = await userReadOnlyRepo.Get(new UserSpecfications(request.Email,request.Password));
+        var user = await userReadOnlyRepo.Get(new UserWithRolesSpecfications(request.Email));
+        
+        if (user == null || !passwordHasher.VerifyPassword(request.Password, user.Password,user))
+            return Error.ValueInvalidWithMessage(nameof(User), "Email / Password are Invalid");
 
-        if (user == null)
-            return Error.NotFound(nameof(User), $"{nameof(User.Email)} {nameof(User.Password)}", $"{request.Email} {request.Password}");
-
+        var userRolesIds = user.UserRoles.Select(r=>r.RoleId).ToList();
+        var userRoles = await roleReadOnlyRepo.GetAll(new RoleSpecifications(userRolesIds));
 
         return new LoginResponse(
                 user.Id,
-                user.Email
+                user.Email,
+                [.. userRoles.Select(u => u.Name)]
             );
     }
 }

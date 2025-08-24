@@ -6,18 +6,23 @@ namespace Domain.Entities.User;
 public class User : IAggregateRoot
 {
     public Guid Id { get; private set; }
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string Email { get; private set; }
+    public string FirstName { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
+    public string Email { get; private set; } = null!;
 
-    public string Password { get; private set; }
+    public string Password { get; private set; } = null!;
     public byte[]? Image { get; private set; }
 
-    private User() { }
+    public IReadOnlyCollection<UserRole> UserRoles => _userRoles.AsReadOnly();
+
+    private readonly List<UserRole> _userRoles;
+
+    private User() {
+    }
 
     public string FullName => $"{FirstName} {LastName}";
 
-    public static Result<User,Error>Create(string firstName,string lastName,string email,string password, byte[]? image)
+    public static Result<User,Error>Create(string firstName,string lastName,string email, byte[]? image)
     {
         var firstNameValidation = ValidateFirstName(firstName);
         if (firstNameValidation.IsFailure)
@@ -31,18 +36,13 @@ public class User : IAggregateRoot
         if (emailValidation.IsFailure)
             return emailValidation.Error;
 
-        var passwordValidation = ValidatePassword(password);
-        if (passwordValidation.IsFailure)
-            return passwordValidation.Error;
-
-
         var user = new User
         {
             Id = Guid.NewGuid(),
             FirstName = firstName.Trim().ToLowerInvariant(),
             LastName = lastName.Trim().ToLowerInvariant(),
             Email = email.Trim(),
-            Image = image
+            Image = image,
         };
 
         return user;
@@ -66,6 +66,35 @@ public class User : IAggregateRoot
         LastName = lastName.Trim().ToLowerInvariant();
         Email = email.Trim();
         Image = image;
+
+        return true;
+    }
+
+    public Result<bool, Error> UpdatePassword(string password)
+    {
+        var passwordValidation = ValidatePassword(password);
+        if (passwordValidation.IsFailure)
+            return passwordValidation.Error;
+
+        Password = password;
+        return true;
+    }
+
+    public Result<bool,Error> AddRole(UserRole role)
+    {
+        var isRoleIdExsist = _userRoles.FirstOrDefault(r=>r.RoleId==role.RoleId);
+        if (isRoleIdExsist != null) return Error.ValueAlreadyExists(nameof(User), nameof(UserRole.RoleId), role.RoleId.ToString());
+
+        _userRoles.Add(role);
+        return true;
+    }
+
+    public Result<bool, Error> RemoveRole(int roleId)
+    {
+        var role = _userRoles.FirstOrDefault(r => r.RoleId == roleId);
+        if (role == null) return Error.NotFound(nameof(User), nameof(UserRole.RoleId), roleId.ToString());
+
+        _userRoles.Remove(role);
 
         return true;
     }

@@ -69,7 +69,7 @@ public class UserSpecfications : Specification<User>
         ApplyPaging(0, pageSize);
     }
 
-    public UserSpecfications(string email , string hashedPassword) { 
-        Criteria = u=> u.Email == email && u.Password== hashedPassword;
+    public UserSpecfications(string email) {
+        Criteria = u => u.Email == email;
     }
 }

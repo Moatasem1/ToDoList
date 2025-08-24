@@ -2,7 +2,7 @@
 
 namespace Application.Features.Users.Contracts.Requests;
 
-public record CreateUserRequest(string FirstName,string LastName,string Email,string? Image);
+public record CreateUserRequest(string FirstName,string LastName,string Email,string? Image, bool IsAdmin);
 
 
 public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest> { 

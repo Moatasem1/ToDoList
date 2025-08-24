@@ -4,10 +4,13 @@ using Application.Services.Interfaces;
 using DataTables.AspNet.AspNetCore;
 using Domain.Common;
 using Domain.Common.Interfaces;
+using Domain.Entities.User;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Options;
@@ -30,6 +33,12 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<CurrentUserService>();
 builder.Services.AddSingleton<IBase64ByteConverter, Base64ByteConverter>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<PasswordHasher<User>>();
+builder.Services.AddSingleton<Application.Services.IEmailService, SmtpEmailService>();
+builder.Services.AddSingleton<EmailTemplateBuilder>();
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.RegisterDataTables();
 
 
@@ -43,6 +52,13 @@ builder.Services.Scan(scan => scan
     .AsSelf()
     .WithTransientLifetime());
 
+var emailPassword = builder.Configuration["EmailPassword"];
+
+builder.Services.Configure<EmailConfig>(options =>
+{
+    builder.Configuration.GetSection("EmailConfig").Bind(options);
+    options.EmailPassword = emailPassword!;
+});
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -66,6 +82,11 @@ builder.Services.AddAuthentication("CookieAuth")
         options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Account/AccessDenied";
         options.Cookie.Name = "Todo.Cookie";
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.SlidingExpiration = true;
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Lax;
     });
 
 

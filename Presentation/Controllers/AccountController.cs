@@ -2,6 +2,7 @@
 using Application.Features.Auth.Contracts.Requests;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,6 +12,11 @@ namespace Presentation.Controllers;
 public class AccountController(LoginCommand loginCommand) : ControllerBase
 {
     public IActionResult Login()
+    {
+        return View();
+    }
+
+    public IActionResult AccessDenied()
     {
         return View();
     }
@@ -31,6 +37,9 @@ public class AccountController(LoginCommand loginCommand) : ControllerBase
             new(ClaimTypes.NameIdentifier,result.Value.Id.ToString())
         };
 
+        foreach (var role in result.Value.Roles)
+            claims.Add(new(ClaimTypes.Role, role));
+
         var identity = new ClaimsIdentity(claims,"CookieAuth");
         var principal = new ClaimsPrincipal(identity);
 
@@ -39,6 +48,7 @@ public class AccountController(LoginCommand loginCommand) : ControllerBase
         return HandleResult(result);
     }
 
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync("CookieAuth");

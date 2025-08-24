@@ -16,3 +16,5 @@ C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\obj\Debug\net8.0\refin
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\bin\Debug\net8.0\Application.dll
+C:\Users\MoatasemAlNaimat\Desktop\ToDoList\Infrastructure\bin\Debug\net8.0\Application.pdb
